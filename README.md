@@ -1,4 +1,4 @@
-# Chomicz—wka
+# Chomiczowka
 > Mix of student humor and technical skills as a newer and "better" reddit.
 
 
