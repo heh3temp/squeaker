@@ -1,5 +1,6 @@
-# ChomiczÃ³wka
+# Chomicz—wka
 > Mix of student humor and technical skills as a newer and "better" reddit.
+
 
 ## Table of Contents
 * [General Info](#general-information)
