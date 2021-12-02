@@ -1,7 +1,6 @@
 pipeline {
-    agent any
-    tools {
-        jdk 'java-17-openjdk'
+    agent {
+        docker { image 'openjdk:17'}
     }
     stages {
         stage('Hello World!') {
