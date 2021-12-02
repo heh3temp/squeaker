@@ -4,15 +4,20 @@ pipeline {
         jdk 'java-17-openjdk'
     }
     stages {
-        stage('Build') {
+        stage('Compile') {
             steps {
                 sh 'chmod +x ./gradlew'
-                sh './gradlew clean build'
+                sh './gradlew clean classes'
             }
         }
         stage('Test') {
             steps {
                 sh './gradlew test'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh './gradlew build'
             }
         }
     }
