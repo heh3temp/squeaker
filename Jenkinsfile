@@ -1,7 +1,4 @@
 pipeline {
-    agent {
-        docker { image 'openjdk:17'}
-    }
     stages {
         stage('Hello World!') {
             steps {
