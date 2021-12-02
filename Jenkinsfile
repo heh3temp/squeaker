@@ -1,9 +1,11 @@
 pipeline {
-    agent any
-    tools {
-        jdk 'java-17-openjdk'
+    agent {
+        docker { image "openjdk:17"}
     }
     stages {
+        stage('Check java version') {
+            sh 'java -version'
+        }
         stage('Compile') {
             steps {
                 sh 'chmod +x ./gradlew'
