@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    tools {
+        jdk 'java-17-openjdk'
+    }
     stages {
         stage('Hello World!') {
             steps {
