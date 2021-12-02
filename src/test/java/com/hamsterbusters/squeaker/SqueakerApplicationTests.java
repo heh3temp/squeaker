@@ -15,7 +15,7 @@ class SqueakerApplicationTests {
 
     @Test
     void exampleTrue() {
-        assertTrue(2 > 1);
+        assertTrue(0 > 1);
     }
 
     @Test
