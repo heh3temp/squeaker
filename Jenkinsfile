@@ -1,14 +1,23 @@
 pipeline {
     agent any
+    tools {
+        jdk 'java-17-openjdk'
+    }
     stages {
-        stage('Hello World!') {
+        stage('Compile') {
             steps {
-                sh 'echo Hello World'
+                sh 'chmod +x ./gradlew'
+                sh './gradlew clean classes'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh './gradlew test'
             }
         }
         stage('Build') {
             steps {
-                sh './gradlew clean build'
+                sh './gradlew build'
             }
         }
     }
