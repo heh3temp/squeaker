@@ -1,13 +1,9 @@
 pipeline {
-    agent {
-        docker { image "openjdk:17"}
+    agent any
+    tools {
+        jdk 'java-17-openjdk'
     }
     stages {
-        stage('Check java version') {
-            steps {
-                sh 'java -version'
-            }
-        }
         stage('Compile') {
             steps {
                 sh './gradlew clean classes'
