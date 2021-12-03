@@ -4,7 +4,9 @@ pipeline {
     }
     stages {
         stage('Check java version') {
-            sh 'java -version'
+            steps {
+                sh 'java -version'
+            }
         }
         stage('Compile') {
             steps {
