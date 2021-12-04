@@ -20,6 +20,20 @@ repositories {
     }
 }
 
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: "http://localhost:8081/nexus/content/repositories/maven-nexus-repo") {
+                authentication(userName: nexusUsername, password: nexusPassword)
+            }
+
+            pom.version = "0.0.1-SNAPSHOT"
+            pom.artifactId = "simple-project"
+            pom.groupId = "com.hamsterbusters"
+        }
+    }
+}
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-web'
