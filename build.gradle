@@ -9,7 +9,15 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 
 repositories {
-    mavenCentral()
+    maven {
+        url "http://localhost:8081/repository/maven-central/"
+        allowInsecureProtocol = true
+
+        credentials {
+            username = nexusUsername
+            password = nexusPassword
+        }
+    }
 }
 
 dependencies {
