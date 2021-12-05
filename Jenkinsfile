@@ -33,7 +33,7 @@ pipeline {
                         [
                             artifactId: 'test-id',
                             classifier: '',
-                            file: 'squeaker-0.0.1-SNAPSHOT.jar',
+                            file: 'build/libs/squeaker-0.0.1-SNAPSHOT.jar',
                             type: 'jar'
                         ]
                     ]
