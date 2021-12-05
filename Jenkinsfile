@@ -21,7 +21,22 @@ pipeline {
         }
         stage('Upload artifacts') {
             steps {
-                nexusArtifactUploader credentialsId: 'nexus-admin', groupId: 'com.hamsterbusters', nexusUrl: 'localhost:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'maven-nexus-repo', version: '0.0.1-SNAPSHOT'
+                nexusArtifactUploader(
+                    credentialsId: 'nexus-admin',
+                    groupId: 'com.hamsterbusters',
+                    nexusUrl: 'localhost:8081',
+                    nexusVersion: 'nexus3',
+                    protocol: 'http',
+                    repository: 'maven-nexus-repo',
+                    version: '0.0.1-SNAPSHOT',
+                    artifacts: [
+                        [
+                            artifactId: '${pom.artifactId}',
+                            classifier: '',
+                            file: '${pom.artifactId}-${pom.version}.jar',
+                            type: 'jar'
+                        ]
+                    ]
             }
         }
     }
