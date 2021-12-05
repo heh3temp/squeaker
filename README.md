@@ -1,5 +1,5 @@
-# Chomiczowka
-> Mix of student humor and technical skills as a newer and "better" reddit.
+# Squeaker
+> Mix of student humor and technical skills as a newer and "better" twitter.
 
 
 ## Table of Contents
