@@ -1,5 +1,3 @@
-apply plugin: 'maven'
-
 plugins {
     id 'org.springframework.boot' version '2.6.1'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
@@ -18,20 +16,6 @@ repositories {
         credentials {
             username = nexusUsername
             password = nexusPassword
-        }
-    }
-}
-
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            repository(url: "http://localhost:8081/nexus/content/repositories/maven-nexus-repo") {
-                authentication(userName: nexusUsername, password: nexusPassword)
-            }
-
-            pom.version = "0.0.1-SNAPSHOT"
-            pom.artifactId = "simple-project"
-            pom.groupId = "com.hamsterbusters"
         }
     }
 }

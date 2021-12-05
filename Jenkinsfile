@@ -19,5 +19,10 @@ pipeline {
                 sh './gradlew build'
             }
         }
+        stage('Upload artifacts') {
+            steps {
+                nexusPublisher nexusInstanceId: 'nexus1', nexusRepositoryId: 'maven-nexus-repo', packages: []
+            }
+        }
     }
 }
