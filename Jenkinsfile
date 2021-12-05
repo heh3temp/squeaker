@@ -31,9 +31,9 @@ pipeline {
                     version: '0.0.1-SNAPSHOT',
                     artifacts: [
                         [
-                            artifactId: '${pom.artifactId}',
+                            artifactId: 'test-id',
                             classifier: '',
-                            file: '${pom.artifactId}-${pom.version}.jar',
+                            file: 'squeaker-0.0.1-SNAPSHOT.jar',
                             type: 'jar'
                         ]
                     ]
