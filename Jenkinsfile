@@ -14,6 +14,13 @@ pipeline {
                 sh './gradlew test'
             }
         }
+        stage('SonarQube analysis') {
+            steps {
+                withSonarQubeEnv('sonarqube') {
+                    sh './gradlew sonarqube -Dsonar.login=${SONAR_AUTH_TOKEN}'
+                }
+            }
+        }
         stage('Build') {
             steps {
                 sh './gradlew build'

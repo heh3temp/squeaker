@@ -2,6 +2,8 @@ plugins {
     id 'org.springframework.boot' version '2.6.1'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
+    id 'jacoco'
+    id 'org.sonarqube' version '3.3'
 }
 
 group = 'com.hamsterbusters'
@@ -18,6 +20,25 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
+jacocoTestReport {
+    reports{
+        xml.enabled = true
+    }
+}
+
+sonarqube{
+    properties({
+        property 'sonar.host.url', 'http://localhost:9000'
+    })
+}
+
+
 test {
     useJUnitPlatform()
 }
+
+test.finalizedBy jacocoTestReport
+
+tasks.named('sonarqube').configure({
+    dependsOn test
+})
