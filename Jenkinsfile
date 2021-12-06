@@ -28,6 +28,7 @@ pipeline {
         }
         stage('Upload artifacts') {
             steps {
+                sh "echo ${version}"
                 nexusArtifactUploader(
                     credentialsId: 'nexus-admin',
                     groupId: 'com.hamsterbusters',
