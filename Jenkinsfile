@@ -25,7 +25,7 @@ pipeline {
             steps {
                 script {
                     $APP_VERSION = sh (
-                        script: "gradle properties | grep 'version' | awk '{print \$2}'",
+                        script: "echo 'test'",
                         returnStdout: true
                     ).trim()
                 }
