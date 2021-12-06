@@ -1,9 +1,4 @@
 pipeline {
-    environment {
-        def version_value = sh(returnStdout: true, script: "cat build.gradle | grep -o 'version = [^,]*'").trim()
-        def version = "${version_value}".split(/=/)[1]
-    }
-
     agent any
     tools {
         jdk 'java-17-openjdk'
@@ -25,7 +20,10 @@ pipeline {
             }
         }
         stage('Upload artifacts') {
-            sh echo "MYVAR: ${version}"
+            def version = sh (
+                script: './gradlew -q printVersion',
+                returnStdout: true
+            ).trim()
 
             steps {
                 nexusArtifactUploader(
