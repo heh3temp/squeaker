@@ -24,7 +24,7 @@ pipeline {
         stage('Upload artifacts') {
             steps {
                 script {
-                    APP_VERSION = sh (
+                    $APP_VERSION = sh (
                         script: "gradle properties | grep 'version' | awk '{print \$2}'",
                         returnStdout: true
                     ).trim()
