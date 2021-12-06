@@ -1,6 +1,5 @@
 pipeline {
-    // agent any
-    agent none
+    agent any
     tools {
         jdk 'java-17-openjdk'
     }
@@ -22,10 +21,12 @@ pipeline {
         }
         stage('Upload artifacts') {
             environment {
-                def appVersion = sh (
-                    script: "gradle properties | grep 'version' | awk '{print \$2}'",
-                    returnStdout: true
-                ).trim()
+                script {
+                    def appVersion = sh (
+                        script: "gradle properties | grep 'version' | awk '{print \$2}'",
+                        returnStdout: true
+                    ).trim()
+                }
             }
 
             steps {
