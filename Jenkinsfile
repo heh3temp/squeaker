@@ -1,7 +1,7 @@
 pipeline {
     environment {
         def version = sh (
-            script: './gradlew -q printVersion',
+            script: "gradle properties | grep 'version' | awk '{print $2}'",
             returnStdout: true
         ).trim()
     }
