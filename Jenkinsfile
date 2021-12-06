@@ -23,12 +23,12 @@ pipeline {
         }
         stage('Upload artifacts') {
             steps {
-                script {
+                // script {
                     $APP_VERSION = sh (
                         script: "./gradlew properties | grep 'version' | awk '{print \$2}'",
                         returnStdout: true
                     ).trim()
-                }
+                // }
                 sh "echo ${APP_VERSION}"
                 sh "./gradlew properties | grep 'version' | awk '{print \$2}'"
                 nexusArtifactUploader(
