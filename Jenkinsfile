@@ -33,12 +33,12 @@ pipeline {
         stage('Upload artifacts') {
             steps {
                 script {
-                    appVersion = sh (
+                    env.appVersion = sh (
                         script: "gradle properties | grep 'version' | awk '{print \$2}'",
                         returnStdout: true
                     ).trim()
                 }
-                sh "echo ${appVersion}"
+                sh "echo ${env.appVersion}"
                 nexusArtifactUploader(
                     credentialsId: 'nexus-admin',
                     groupId: 'com.hamsterbusters',
@@ -46,12 +46,12 @@ pipeline {
                     nexusVersion: 'nexus3',
                     protocol: 'http',
                     repository: 'maven-nexus-repo',
-                    version: "${appVersion}",
+                    version: "${env.appVersion}",
                     artifacts: [
                         [
                             artifactId: 'squeaker',
                             classifier: '',
-                            file: "build/libs/squeaker-${appVersion}.jar",
+                            file: "build/libs/squeaker-${env.appVersion}.jar",
                             type: 'jar'
                         ]
                     ]
