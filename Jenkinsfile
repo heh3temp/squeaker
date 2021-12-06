@@ -1,7 +1,9 @@
-def version_value = sh(returnStdout: true, script: "cat build.gradle | grep -o 'version = [^,]*'").trim()
-def version = version_value.split(/=/)[1]
-
 pipeline {
+    environment {
+        def version_value = sh(returnStdout: true, script: "cat build.gradle | grep -o 'version = [^,]*'").trim()
+        def version = version_value.split(/=/)[1]
+    }
+
     agent any
     tools {
         jdk 'java-17-openjdk'
@@ -23,6 +25,8 @@ pipeline {
             }
         }
         stage('Upload artifacts') {
+            echo "MYVAR: ${version}"
+
             steps {
                 nexusArtifactUploader(
                     credentialsId: 'nexus-admin',
@@ -31,12 +35,12 @@ pipeline {
                     nexusVersion: 'nexus3',
                     protocol: 'http',
                     repository: 'maven-nexus-repo',
-                    version: '${version}',
+                    version: ${version},
                     artifacts: [
                         [
                             artifactId: 'squeaker',
                             classifier: '',
-                            file: 'build/libs/squeaker-${version}.jar',
+                            file: 'build/libs/squeaker-' + ${version} + '.jar',
                             type: 'jar'
                         ]
                     ]
