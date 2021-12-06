@@ -20,8 +20,8 @@ pipeline {
             }
         }
         stage('Upload artifacts') {
-            environment {
-                script {
+            script {
+                environment {
                     def APP_VERSION = sh (
                         script: "gradle properties | grep 'version' | awk '{print \$2}'",
                         returnStdout: true
