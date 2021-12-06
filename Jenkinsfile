@@ -1,4 +1,11 @@
 pipeline {
+    environment {
+        def version = sh (
+            script: './gradlew -q printVersion',
+            returnStdout: true
+        ).trim()
+    }
+
     agent any
     tools {
         jdk 'java-17-openjdk'
@@ -20,11 +27,6 @@ pipeline {
             }
         }
         stage('Upload artifacts') {
-            def version = sh (
-                script: './gradlew -q printVersion',
-                returnStdout: true
-            ).trim()
-
             steps {
                 nexusArtifactUploader(
                     credentialsId: 'nexus-admin',
