@@ -28,10 +28,7 @@ pipeline {
                         script: "./gradlew properties | grep 'version' | awk '{print \$2}'",
                         returnStdout: true
                     ).trim()
-                    echo "${APP_VERSION}"
                 }
-                sh "echo ${APP_VERSION}"
-                sh "./gradlew properties | grep 'version' | awk '{print \$2}'"
                 nexusArtifactUploader(
                     credentialsId: 'nexus-admin',
                     groupId: 'com.hamsterbusters',
