@@ -28,7 +28,7 @@ pipeline {
         }
         stage('Upload artifacts') {
             steps {
-                sh "echo ${version}"
+                sh "echo ${env.version}"
                 nexusArtifactUploader(
                     credentialsId: 'nexus-admin',
                     groupId: 'com.hamsterbusters',
@@ -36,12 +36,12 @@ pipeline {
                     nexusVersion: 'nexus3',
                     protocol: 'http',
                     repository: 'maven-nexus-repo',
-                    version: "${version}",
+                    version: "${env.version}",
                     artifacts: [
                         [
                             artifactId: 'squeaker',
                             classifier: '',
-                            file: "build/libs/squeaker-${version}.jar",
+                            file: "build/libs/squeaker-${env.version}.jar",
                             type: 'jar'
                         ]
                     ]
