@@ -1,9 +1,14 @@
-def appVersion = sh (
-    script: "gradle properties | grep 'version' | awk '{print \$2}'",
-    returnStdout: true
-).trim()
+// def appVersion = sh (
+//     script: "gradle properties | grep 'version' | awk '{print \$2}'",
+//     returnStdout: true
+// ).trim()
 
 pipeline {
+    environment {
+        appVersion = "0.0.1-SNAPSHOT"
+    }
+
+
     agent any
     tools {
         jdk 'java-17-openjdk'
