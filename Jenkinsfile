@@ -1,7 +1,7 @@
 pipeline {
     environment {
         def version_value = sh(returnStdout: true, script: "cat build.gradle | grep -o 'version = [^,]*'").trim()
-        def version = $version_value.split(/=/)[1]
+        def version = "${version_value}".split(/=/)[1]
     }
 
     agent any
