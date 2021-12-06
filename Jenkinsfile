@@ -1,11 +1,4 @@
 pipeline {
-    environment {
-        def version = sh (
-            script: "gradle properties | grep 'version' | awk '{print \$2}'",
-            returnStdout: true
-        ).trim()
-    }
-
     agent any
     tools {
         jdk 'java-17-openjdk'
@@ -27,6 +20,13 @@ pipeline {
             }
         }
         stage('Upload artifacts') {
+            environment {
+                def version = sh (
+                    script: "gradle properties | grep 'version' | awk '{print \$2}'",
+                    returnStdout: true
+                ).trim()
+            }
+
             steps {
                 sh "echo ${env.version}"
                 nexusArtifactUploader(
