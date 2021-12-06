@@ -31,12 +31,12 @@ pipeline {
                     nexusVersion: 'nexus3',
                     protocol: 'http',
                     repository: 'maven-nexus-repo',
-                    version: '$version',
+                    version: '${version}',
                     artifacts: [
                         [
                             artifactId: 'squeaker',
                             classifier: '',
-                            file: 'build/libs/squeaker-$version.jar',
+                            file: 'build/libs/squeaker-${version}.jar',
                             type: 'jar'
                         ]
                     ]
