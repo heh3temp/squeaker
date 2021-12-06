@@ -1,3 +1,8 @@
+def appVersion = sh (
+    script: "gradle properties | grep 'version' | awk '{print \$2}'",
+    returnStdout: true
+).trim()
+
 pipeline {
     agent any
     tools {
@@ -20,13 +25,6 @@ pipeline {
             }
         }
         stage('Upload artifacts') {
-            script {
-                env.FILENAME = sh (
-                    script: "gradle properties | grep 'version' | awk '{print \$2}'",
-                    returnStdout: true
-                ).trim()
-            }
-
             steps {
                 sh "echo ${appVersion}"
                 nexusArtifactUploader(
