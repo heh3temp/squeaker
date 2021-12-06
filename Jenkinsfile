@@ -1,3 +1,6 @@
+def version_value = sh(returnStdout: true, script: "cat build.gradle | grep -o 'version = [^,]*'").trim()
+def version = version_value.split(/=/)[1]
+
 pipeline {
     agent any
     tools {
@@ -20,8 +23,6 @@ pipeline {
             }
         }
         stage('Upload artifacts') {
-            def version_value = sh(returnStdout: true, script: "cat build.gradle | grep -o 'version = [^,]*'").trim()
-            def version = version_value.split(/=/)[1]
             steps {
                 nexusArtifactUploader(
                     credentialsId: 'nexus-admin',
