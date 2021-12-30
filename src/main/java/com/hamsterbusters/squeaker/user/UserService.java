@@ -49,4 +49,10 @@ public class UserService implements UserDetailsService {
         );
     }
 
+    public int getUserIdByNickname(String nickname) {
+        Optional<User> userOptional = userRepository.findUserByNickname(nickname);
+        User user = userOptional.orElseThrow(() -> new UsernameNotFoundException("User not found in the database"));
+        return user.getUserId();
+    }
+
 }
