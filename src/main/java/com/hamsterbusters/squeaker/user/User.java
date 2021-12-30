@@ -20,6 +20,7 @@ public class User {
     private String nickname;
     private String password;
     private String email;
+    private String password;
     private LocalDateTime joinDate;
     private LocalDateTime lastActivity;
     private boolean isActive;

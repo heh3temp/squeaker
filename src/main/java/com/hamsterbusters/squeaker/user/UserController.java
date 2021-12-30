@@ -1,13 +1,12 @@
 package com.hamsterbusters.squeaker.user;
 
+import com.hamsterbusters.squeaker.post.PostDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import com.hamsterbusters.squeaker.post.PostDto;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -36,6 +35,7 @@ public class UserController {
         List<PostDto> posts = List.of(
                 new PostDto(
                         1,
+                        1,
                         "patryk",
                         "Lubie placki",
                         null,
@@ -45,6 +45,7 @@ public class UserController {
                 ),
                 new PostDto(
                         2,
+                        2,
                         "michał",
                         "Nie lubie placki",
                         null,
@@ -53,6 +54,7 @@ public class UserController {
                         0
                 ),
                 new PostDto(
+                        3,
                         3,
                         "jan",
                         "Kocham placki",

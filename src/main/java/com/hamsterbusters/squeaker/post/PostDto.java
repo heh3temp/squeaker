@@ -11,6 +11,7 @@ import lombok.ToString;
 @AllArgsConstructor
 public class PostDto {
 
+    private int postId;
     private int userId;
     private String username;
     private String text;
