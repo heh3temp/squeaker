@@ -15,6 +15,7 @@ import com.hamsterbusters.squeaker.post.PostDto;
 public class UserController {
 
     private final UserRepository userRepository;
+    private final UserService userService;
 
     @GetMapping("/user/{userId}")
     public ResponseEntity<User> getUser(@PathVariable int userId) {
@@ -25,10 +26,9 @@ public class UserController {
     }
 
     @PostMapping("/user")
-    public ResponseEntity<Void> addUser(@RequestBody UserDto user) {
+    public ResponseEntity<Void> addUser(@RequestBody User user) {
         log.debug(user.toString());
-        return ResponseEntity.ok()
-                .build();
+        return userService.register(user);
     }
 
     @GetMapping("/user/{userId}/posts")
