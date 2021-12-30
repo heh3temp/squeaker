@@ -19,6 +19,7 @@ public class PostController {
         List<PostDto> posts = List.of(
                 new PostDto(
                         1,
+                        1,
                         "jan",
                         "Lubie placki",
                         null,
@@ -28,6 +29,7 @@ public class PostController {
                 ),
                 new PostDto(
                         2,
+                        2,
                         "blazej",
                         "Nie lubie placki",
                         null,
@@ -36,6 +38,7 @@ public class PostController {
                         0
                 ),
                 new PostDto(
+                        3,
                         3,
                         "jan",
                         "Kocham placki",

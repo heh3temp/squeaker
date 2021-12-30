@@ -1,7 +1,9 @@
 package com.hamsterbusters.squeaker.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hamsterbusters.squeaker.user.UserService;
 import io.jsonwebtoken.Jwts;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -10,26 +12,19 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import javax.crypto.SecretKey;
 import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Date;
 
+@RequiredArgsConstructor
 public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
     private final JwtConfig jwtConfig;
     private final SecretKey secretKey;
-
-    public JwtUsernameAndPasswordAuthenticationFilter(AuthenticationManager authenticationManager,
-                                                      JwtConfig jwtConfig,
-                                                      SecretKey secretKey) {
-        this.authenticationManager = authenticationManager;
-        this.jwtConfig = jwtConfig;
-        this.secretKey = secretKey;
-    }
+    private final UserService userService;
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request,
@@ -58,10 +53,14 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
                                             HttpServletResponse response,
                                             FilterChain chain,
                                             Authentication authResult) {
-//        TODO: set subject as userId and name as name
+//        TODO: Clean up getting user id
+        String nickname = authResult.getName();
+        int userId = userService.getUserIdByNickname(nickname);
+
         String token = Jwts.builder()
                 .setHeaderParam("typ", "JWT")
-                .setSubject(authResult.getName())
+                .setSubject(String.valueOf(userId))
+                .claim("name", nickname)
                 .setIssuedAt(new Date())
                 .setExpiration(java.sql.Date.valueOf(LocalDate.now().plusDays(jwtConfig.getTokenExpirationAfterDays())))
                 .signWith(secretKey)
