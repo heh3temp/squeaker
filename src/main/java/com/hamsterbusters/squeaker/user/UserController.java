@@ -1,19 +1,18 @@
 package com.hamsterbusters.squeaker.user;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import com.hamsterbusters.squeaker.post.PostDto;
 
+@Slf4j
 @RestController
 public class UserController {
 
     @GetMapping("/user/{userId}")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ADMINTRAINEE')")
     public ResponseEntity<UserDto> getUser(@PathVariable int userId) {
         return ResponseEntity.ok()
                 .body(
@@ -28,8 +27,14 @@ public class UserController {
                 );
     }
 
+    @PostMapping("/user")
+    public ResponseEntity<Void> addUser(@RequestBody UserDto user) {
+        log.debug(user.toString());
+        return ResponseEntity.ok()
+                .build();
+    }
+
     @GetMapping("/user/{userId}/posts")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ADMINTRAINEE')")
     public ResponseEntity<List<PostDto>> getUserPosts(@PathVariable int userId) {
         List<PostDto> posts = List.of(
                 new PostDto(
