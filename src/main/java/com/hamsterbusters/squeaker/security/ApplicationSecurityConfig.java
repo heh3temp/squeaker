@@ -40,9 +40,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/user")
                     .permitAll()
                 .anyRequest()
-                .authenticated()
-                .and()
-                .formLogin();
+                .authenticated();
     }
 
     @Override

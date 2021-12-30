@@ -27,7 +27,8 @@ public class UserController {
     @PostMapping("/user")
     public ResponseEntity<Void> addUser(@RequestBody User user) {
         log.debug(user.toString());
-        return userService.register(user);
+        userService.register(user);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/user/{userId}/posts")

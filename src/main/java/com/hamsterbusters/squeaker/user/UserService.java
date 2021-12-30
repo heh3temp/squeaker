@@ -23,7 +23,7 @@ public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public ResponseEntity<Void> register(User user) {
+    public void register(User user) {
 
         String encodedPassword = passwordEncoder.encode(user.getPassword());
 
@@ -33,7 +33,6 @@ public class UserService implements UserDetailsService {
         user.setActive(true);
 
         userRepository.save(user);
-        return ResponseEntity.ok().build();
     }
 
     @Override
