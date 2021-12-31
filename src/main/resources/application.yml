@@ -3,7 +3,7 @@ server:
 application:
     jwt:
         secretKey: ${SECRET_KEY:securesecuresecuresecuresecuresecuresecuresecuresecuresecuresecure}
-        tokenPrefix: Bearer
+        tokenPrefix: "Bearer "
         tokenExpirationAfterDays: 10
 
 spring:
