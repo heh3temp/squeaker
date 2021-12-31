@@ -13,9 +13,9 @@ public class PostDto {
 
     private int postId;
     private int userId;
-    private String username;
+    private String nickname;
     private String text;
-    private Object image;
+    private Object picture;
     private Object avatar;
     private int commentsCount;
     private int likesCount;

@@ -11,7 +11,7 @@ import lombok.ToString;
 @AllArgsConstructor
 public class UserDto {
 
-    private String username;
+    private String nickname;
     private String description;
     private Object background;
     private Object avatar;
