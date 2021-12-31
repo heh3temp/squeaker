@@ -19,5 +19,6 @@ public class PostDto {
     private Object avatar;
     private int commentsCount;
     private int likesCount;
+    private boolean liked;
 
 }

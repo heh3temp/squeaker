@@ -25,7 +25,8 @@ public class PostController {
                         null,
                         null,
                         0,
-                        0
+                        0,
+                        true
                 ),
                 new PostDto(
                         2,
@@ -35,7 +36,8 @@ public class PostController {
                         null,
                         null,
                         0,
-                        0
+                        0,
+                        true
                 ),
                 new PostDto(
                         3,
@@ -45,7 +47,8 @@ public class PostController {
                         null,
                         null,
                         0,
-                        0
+                        0,
+                        true
                 )
         );
 

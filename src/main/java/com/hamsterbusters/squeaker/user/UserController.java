@@ -17,10 +17,17 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<User> getUser(@PathVariable int userId) {
+    public ResponseEntity<UserDto> getUser(@PathVariable int userId) {
         return ResponseEntity.ok()
                 .body(
-                        userRepository.findById(userId).get()
+                        new UserDto(
+                                "jan",
+                                "description",
+                                null,
+                                null,
+                                0,
+                                0
+                        )
                 );
     }
 
@@ -42,7 +49,8 @@ public class UserController {
                         null,
                         null,
                         0,
-                        0
+                        0,
+                        true
                 ),
                 new PostDto(
                         2,
@@ -52,7 +60,8 @@ public class UserController {
                         null,
                         null,
                         0,
-                        0
+                        0,
+                        true
                 ),
                 new PostDto(
                         3,
@@ -62,7 +71,8 @@ public class UserController {
                         null,
                         null,
                         0,
-                        0
+                        0,
+                        true
                 )
         );
 
