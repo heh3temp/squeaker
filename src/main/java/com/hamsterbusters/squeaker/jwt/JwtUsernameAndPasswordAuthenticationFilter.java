@@ -1,6 +1,7 @@
 package com.hamsterbusters.squeaker.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hamsterbusters.squeaker.user.User;
 import com.hamsterbusters.squeaker.user.UserService;
 import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @RequiredArgsConstructor
 public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
@@ -52,14 +55,14 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
     protected void successfulAuthentication(HttpServletRequest request,
                                             HttpServletResponse response,
                                             FilterChain chain,
-                                            Authentication authResult) {
+                                            Authentication authResult) throws IOException {
 //        TODO: Clean up getting user id
         String nickname = authResult.getName();
-        int userId = userService.getUserIdByNickname(nickname);
+        User user = userService.getUserByNickname(nickname);
 
         String token = Jwts.builder()
                 .setHeaderParam("typ", "JWT")
-                .setSubject(String.valueOf(userId))
+                .setSubject(String.valueOf(user.getUserId()))
                 .claim("name", nickname)
                 .setIssuedAt(new Date())
                 .setExpiration(java.sql.Date.valueOf(LocalDate.now().plusDays(jwtConfig.getTokenExpirationAfterDays())))
@@ -67,5 +70,12 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
                 .compact();
 
         response.addHeader(jwtConfig.getAuthorizationHeader(), jwtConfig.getTokenPrefix() + token);
+
+        Map<String, String> userData = new HashMap<>();
+        userData.put("id", user.getUserId().toString());
+        userData.put("nickname", user.getNickname());
+        userData.put("avatar", null);
+
+        new ObjectMapper().writeValue(response.getOutputStream(), userData);
     }
 }
