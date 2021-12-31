@@ -1,8 +1,10 @@
 package com.hamsterbusters.squeaker.user;
 
+import com.hamsterbusters.squeaker.post.Post;
+import com.hamsterbusters.squeaker.post.PostDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
+import org.modelmapper.ModelMapper;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,7 +15,9 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -22,6 +26,7 @@ public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final ModelMapper modelMapper;
 
     public void register(User user) {
 
@@ -52,6 +57,30 @@ public class UserService implements UserDetailsService {
         Optional<User> userOptional = userRepository.findUserByNickname(nickname);
         User user = userOptional.orElseThrow(() -> new UsernameNotFoundException("User not found in the database"));
         return user;
+    }
+
+    public List<PostDto> getUserPosts(int userId) {
+        Optional<User> userOptional = userRepository.findById(userId);
+        User user = userOptional.orElseThrow(() -> new UsernameNotFoundException("User not found in the database"));
+        List<Post> posts = user.getPosts();
+        return posts.stream()
+                .map(post -> mapPostToDto(post, user))
+                .collect(Collectors.toList());
+    }
+
+    private PostDto mapPostToDto(Post post, User user) {
+        PostDto postDto = modelMapper.map(post, PostDto.class);
+        postDto.setUserId(user.getUserId());
+        postDto.setNickname(user.getNickname());
+        postDto.setAvatar(user.getAvatar());
+        postDto.setCommentsCount(generate(0, 20));
+        postDto.setLikesCount(generate(0, 20));
+        postDto.setLiked(Math.random() > 0.5);
+        return postDto;
+    }
+
+    public static int generate(int min, int max) {
+        return min + (int)(Math.random() * ((max - min) + 1));
     }
 
 }

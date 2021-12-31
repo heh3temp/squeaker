@@ -1,5 +1,6 @@
 package com.hamsterbusters.squeaker.user;
 
+import com.hamsterbusters.squeaker.post.Post;
 import com.hamsterbusters.squeaker.post.PostDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,43 +41,8 @@ public class UserController {
 
     @GetMapping("/user/{userId}/posts")
     public ResponseEntity<List<PostDto>> getUserPosts(@PathVariable int userId) {
-        List<PostDto> posts = List.of(
-                new PostDto(
-                        1,
-                        1,
-                        "patryk",
-                        "Lubie placki",
-                        null,
-                        null,
-                        0,
-                        0,
-                        true
-                ),
-                new PostDto(
-                        2,
-                        2,
-                        "michał",
-                        "Nie lubie placki",
-                        null,
-                        null,
-                        0,
-                        0,
-                        true
-                ),
-                new PostDto(
-                        3,
-                        3,
-                        "jan",
-                        "Kocham placki",
-                        null,
-                        null,
-                        0,
-                        0,
-                        true
-                )
-        );
-
+        List<PostDto> userPosts = userService.getUserPosts(userId);
         return ResponseEntity.ok()
-                .body(posts);
+                .body(userPosts);
     }
 }

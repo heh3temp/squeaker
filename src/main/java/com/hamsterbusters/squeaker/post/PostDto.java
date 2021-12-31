@@ -1,21 +1,19 @@
 package com.hamsterbusters.squeaker.post;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @Setter
 @ToString
 @AllArgsConstructor
+@NoArgsConstructor
 public class PostDto {
 
     private int postId;
     private int userId;
-    private String username;
-    private String text;
-    private Object image;
+    private String nickname;
+    private String body;
+    private Object picture;
     private Object avatar;
     private int commentsCount;
     private int likesCount;
