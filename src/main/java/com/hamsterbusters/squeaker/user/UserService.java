@@ -53,6 +53,20 @@ public class UserService implements UserDetailsService {
         );
     }
 
+    public UserDto getUserDtoById(int userId) {
+        Optional<User> userOptional = userRepository.findById(userId);
+        User user = userOptional.orElseThrow(() -> new UsernameNotFoundException("User not found in the database"));
+        return mapUserToDto(user);
+    }
+
+    private UserDto mapUserToDto(User user) {
+        UserDto userDto = modelMapper.map(user, UserDto.class);
+        userDto.setDescription("Nie było w dokumentacji");
+        userDto.setFollowingCount(generate(0, 20));
+        userDto.setFollowersCount(generate(0, 20));
+        return userDto;
+    }
+
     public User getUserByNickname(String nickname) {
         Optional<User> userOptional = userRepository.findUserByNickname(nickname);
         User user = userOptional.orElseThrow(() -> new UsernameNotFoundException("User not found in the database"));

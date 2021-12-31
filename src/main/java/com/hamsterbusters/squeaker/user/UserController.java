@@ -21,14 +21,7 @@ public class UserController {
     public ResponseEntity<UserDto> getUser(@PathVariable int userId) {
         return ResponseEntity.ok()
                 .body(
-                        new UserDto(
-                                "jan",
-                                "description",
-                                null,
-                                null,
-                                0,
-                                0
-                        )
+                        userService.getUserDtoById(userId)
                 );
     }
 
