@@ -1,18 +1,18 @@
 package com.hamsterbusters.squeaker.post;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Slf4j
+@RequiredArgsConstructor
 @RestController
 public class PostController {
+
+    private final PostService postService;
 
     @GetMapping("/popular_posts")
     public ResponseEntity<List<PostDto>> getPopularPosts() {
@@ -57,8 +57,8 @@ public class PostController {
     }
 
     @PostMapping("/post")
-    public ResponseEntity<Void> addPost(@RequestBody PostDto post) {
-        log.debug(post.toString());
+    public ResponseEntity<Void> addPost(@RequestBody CreatePostDto postDto) {
+        postService.createNewPost(postDto);
         return ResponseEntity.ok()
                 .build();
     }

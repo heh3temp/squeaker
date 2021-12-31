@@ -5,6 +5,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,16 +18,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@RequiredArgsConstructor
 public class JwtTokenVerifier extends OncePerRequestFilter {
 
     private final SecretKey secretKey;
     private final JwtConfig jwtConfig;
-
-    public JwtTokenVerifier(SecretKey secretKey,
-                            JwtConfig jwtConfig) {
-        this.secretKey = secretKey;
-        this.jwtConfig = jwtConfig;
-    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
