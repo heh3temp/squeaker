@@ -12,7 +12,7 @@ public class PostDto {
     private int postId;
     private int userId;
     private String nickname;
-    private String text;
+    private String body;
     private Object picture;
     private Object avatar;
     private int commentsCount;
