@@ -1,10 +1,12 @@
 package com.hamsterbusters.squeaker.user;
 
+import com.hamsterbusters.squeaker.post.Post;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -22,5 +24,8 @@ public class User {
     private LocalDateTime lastActivity;
     private boolean isActive;
     private byte[] avatar;
+
+    @OneToMany(mappedBy = "user")
+    private List<Post> posts;
 
 }
