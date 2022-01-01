@@ -15,13 +15,13 @@ public class PostService {
     private final PostRepository postRepository;
     private final ModelMapper modelMapper;
 
-    public void createNewPost(CreatePostDto postDto) {
+    public void createNewPost(NewPostDto postDto) {
         Post post = mapDtoToPost(postDto);
         post.setUserId(getPrincipalFromJwtToken());
         postRepository.save(post);
     }
 
-    private Post mapDtoToPost(CreatePostDto postDto) {
+    private Post mapDtoToPost(NewPostDto postDto) {
         Post post = modelMapper.map(postDto, Post.class);
         post.setCreationDate(LocalDateTime.now());
         post.setModificationDate(LocalDateTime.now());
@@ -31,6 +31,5 @@ public class PostService {
     private int getPrincipalFromJwtToken() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return Integer.parseInt((String) authentication.getPrincipal());
-
     }
 }

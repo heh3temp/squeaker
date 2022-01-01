@@ -61,16 +61,17 @@ public class UserService implements UserDetailsService {
 
     private UserDto mapUserToDto(User user) {
         UserDto userDto = modelMapper.map(user, UserDto.class);
-        userDto.setDescription("Nie było w dokumentacji");
-        userDto.setFollowingCount(generate(0, 20));
-        userDto.setFollowersCount(generate(0, 20));
+        userDto.setDescription(user.getDescription());
+
+        userDto.setFollowingCount(user.getFollowed().size());
+        userDto.setFollowersCount(user.getFollowers().size());
+
         return userDto;
     }
 
     public User getUserByNickname(String nickname) {
         Optional<User> userOptional = userRepository.findUserByNickname(nickname);
-        User user = userOptional.orElseThrow(() -> new UsernameNotFoundException("User not found in the database"));
-        return user;
+        return userOptional.orElseThrow(() -> new UsernameNotFoundException("User not found in the database"));
     }
 
     public List<PostDto> getUserPosts(int userId) {
@@ -87,14 +88,14 @@ public class UserService implements UserDetailsService {
         postDto.setUserId(user.getUserId());
         postDto.setNickname(user.getNickname());
         postDto.setAvatar(user.getAvatar());
-        postDto.setCommentsCount(generate(0, 20));
+        postDto.setCommentsCount(0);
         postDto.setLikesCount(generate(0, 20));
         postDto.setLiked(Math.random() > 0.5);
         return postDto;
     }
 
     public static int generate(int min, int max) {
-        return min + (int)(Math.random() * ((max - min) + 1));
+        return min + (int) (Math.random() * ((max - min) + 1));
     }
 
 }
