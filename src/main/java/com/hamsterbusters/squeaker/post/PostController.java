@@ -20,13 +20,10 @@ public class PostController {
     @GetMapping("/popular_posts")
     public ResponseEntity<List<PostDto>> getPopularPosts(@RequestParam int hours) {
 
-        List<Post> popularPosts = postService.getPopularPosts(hours);
-
-        List<PostDto> posts =  popularPosts.stream().map(post -> postMapper.mapPostToDto(post, post.getUser())).collect(Collectors.toList());
-
+        List<PostDto> popularPosts = postService.getPopularPosts(hours);
 
         return ResponseEntity.ok()
-                .body(posts);
+                .body(popularPosts);
     }
 
     @PostMapping("/post")

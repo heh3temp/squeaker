@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -29,9 +30,11 @@ public class PostService {
 
     }
 
-    public List<Post> getPopularPosts(int hours) {
+    public List<PostDto> getPopularPosts(int hours) {
         List<Post> popularPosts = postRepository.findByCreationDateGreaterThan(LocalDateTime.now().minusHours(hours));
 
-        return popularPosts;
+        return popularPosts.stream()
+                .map(post -> postMapper.mapPostToDto(post, post.getUser()))
+                .collect(Collectors.toList());
     }
 }

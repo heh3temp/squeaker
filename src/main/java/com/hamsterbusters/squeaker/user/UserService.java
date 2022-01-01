@@ -61,7 +61,6 @@ public class UserService implements UserDetailsService {
         return userMapper.mapUserToDto(user);
     }
 
-
     public User getUserByNickname(String nickname) {
         Optional<User> userOptional = userRepository.findUserByNickname(nickname);
         return userOptional.orElseThrow(() -> new UsernameNotFoundException("User not found in the database"));
