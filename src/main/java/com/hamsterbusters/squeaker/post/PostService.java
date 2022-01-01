@@ -7,29 +7,34 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
 public class PostService {
 
     private final PostRepository postRepository;
-    private final ModelMapper modelMapper;
+    private final PostMapper postMapper;
 
     public void createNewPost(NewPostDto postDto) {
-        Post post = mapDtoToPost(postDto);
+        Post post = postMapper.mapDtoToPost(postDto);
         post.setUserId(getPrincipalFromJwtToken());
         postRepository.save(post);
-    }
-
-    private Post mapDtoToPost(NewPostDto postDto) {
-        Post post = modelMapper.map(postDto, Post.class);
-        post.setCreationDate(LocalDateTime.now());
-        post.setModificationDate(LocalDateTime.now());
-        return post;
     }
 
     private int getPrincipalFromJwtToken() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return Integer.parseInt((String) authentication.getPrincipal());
+
+    }
+
+    public List<PostDto> getPopularPosts(int hours) {
+        List<Post> popularPosts = postRepository.findByCreationDateGreaterThan(LocalDateTime.now().minusHours(hours));
+
+        return popularPosts.stream()
+                .map(post -> postMapper.mapPostToDto(post, post.getUser()))
+                .collect(Collectors.toList());
     }
 }

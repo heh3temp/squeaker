@@ -1,6 +1,14 @@
 package com.hamsterbusters.squeaker.post;
 
-import org.springframework.data.repository.CrudRepository;
+import com.hamsterbusters.squeaker.user.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface PostRepository extends CrudRepository<Post, Integer> {
+import java.time.LocalDateTime;
+import java.util.List;
+
+@Repository
+public interface PostRepository extends JpaRepository<Post, Integer> {
+
+    List<Post> findByCreationDateGreaterThan(LocalDateTime creationDate);
 }

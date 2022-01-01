@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -14,50 +15,15 @@ import java.util.List;
 public class PostController {
 
     private final PostService postService;
+    private final PostMapper postMapper;
 
     @GetMapping("/popular_posts")
-    public ResponseEntity<List<PostDto>> getPopularPosts() {
-        List<PostDto> posts = List.of(
-                new PostDto(
-                        1,
-                        1,
-                        "jan",
-                        "Lubie placki",
-                        null,
-                        null,
-                        0,
-                        0,
-                        true,
-                        LocalDateTime.now()
-                ),
-                new PostDto(
-                        2,
-                        2,
-                        "blazej",
-                        "Nie lubie placki",
-                        null,
-                        null,
-                        0,
-                        0,
-                        true,
-                        LocalDateTime.now()
-                ),
-                new PostDto(
-                        3,
-                        3,
-                        "jan",
-                        "Kocham placki",
-                        null,
-                        null,
-                        0,
-                        0,
-                        true,
-                        LocalDateTime.now()
-                )
-        );
+    public ResponseEntity<List<PostDto>> getPopularPosts(@RequestParam int hours) {
+
+        List<PostDto> popularPosts = postService.getPopularPosts(hours);
 
         return ResponseEntity.ok()
-                .body(posts);
+                .body(popularPosts);
     }
 
     @PostMapping("/post")
