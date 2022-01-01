@@ -1,6 +1,5 @@
 package com.hamsterbusters.squeaker.user;
 
-import com.hamsterbusters.squeaker.post.Post;
 import com.hamsterbusters.squeaker.post.PostDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +13,6 @@ import java.util.List;
 @RestController
 public class UserController {
 
-    private final UserRepository userRepository;
     private final UserService userService;
 
     @GetMapping("/user/{userId}")
@@ -38,4 +36,5 @@ public class UserController {
         return ResponseEntity.ok()
                 .body(userPosts);
     }
+
 }

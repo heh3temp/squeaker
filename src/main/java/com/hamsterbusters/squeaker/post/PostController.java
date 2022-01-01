@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,7 +30,7 @@ public class PostController {
     }
 
     @PostMapping("/post")
-    public ResponseEntity<Void> addPost(@RequestBody CreatePostDto postDto) {
+    public ResponseEntity<Void> addPost(@RequestBody NewPostDto postDto) {
         postService.createNewPost(postDto);
         return ResponseEntity.ok()
                 .build();

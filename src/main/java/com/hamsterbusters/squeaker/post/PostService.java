@@ -17,7 +17,7 @@ public class PostService {
     private final PostRepository postRepository;
     private final PostMapper postMapper;
 
-    public void createNewPost(CreatePostDto postDto) {
+    public void createNewPost(NewPostDto postDto) {
         Post post = postMapper.mapDtoToPost(postDto);
         post.setUserId(getPrincipalFromJwtToken());
         postRepository.save(post);
