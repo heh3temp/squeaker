@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -26,7 +27,8 @@ public class PostController {
                         null,
                         0,
                         0,
-                        true
+                        true,
+                        LocalDateTime.now()
                 ),
                 new PostDto(
                         2,
@@ -37,7 +39,8 @@ public class PostController {
                         null,
                         0,
                         0,
-                        true
+                        true,
+                        LocalDateTime.now()
                 ),
                 new PostDto(
                         3,
@@ -48,7 +51,8 @@ public class PostController {
                         null,
                         0,
                         0,
-                        true
+                        true,
+                        LocalDateTime.now()
                 )
         );
 

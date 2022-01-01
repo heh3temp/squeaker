@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -20,5 +22,6 @@ public class PostDto {
     private int commentsCount;
     private int likesCount;
     private boolean liked;
+    private LocalDateTime creationDate;
 
 }

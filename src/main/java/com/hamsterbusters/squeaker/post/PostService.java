@@ -31,6 +31,5 @@ public class PostService {
     private int getPrincipalFromJwtToken() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return Integer.parseInt((String) authentication.getPrincipal());
-
     }
 }
