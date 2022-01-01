@@ -25,6 +25,7 @@ public class User {
     private LocalDateTime joinDate;
     private LocalDateTime lastActivity;
     private boolean isActive;
+    private String description;
     private byte[] avatar;
 
     @OneToMany(mappedBy = "user")
