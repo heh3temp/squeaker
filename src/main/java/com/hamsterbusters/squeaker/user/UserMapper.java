@@ -13,7 +13,7 @@ public class UserMapper {
 
     public UserDto mapUserToDto(User user) {
         UserDto userDto = modelMapper.map(user, UserDto.class);
-        userDto.setDescription("Nie było w dokumentacji");
+        userDto.setDescription(user.getDescription());
 
         userDto.setFollowingCount(user.getFollowed().size());
         userDto.setFollowersCount(user.getFollowers().size());

@@ -27,7 +27,7 @@ public class PostMapper {
         return postDto;
     }
 
-    public Post mapDtoToPost(CreatePostDto postDto) {
+    public Post mapDtoToPost(NewPostDto postDto) {
         Post post = modelMapper.map(postDto, Post.class);
         post.setCreationDate(LocalDateTime.now());
         post.setModificationDate(LocalDateTime.now());
