@@ -61,7 +61,7 @@ public class UserService implements UserDetailsService {
 
     private UserDto mapUserToDto(User user) {
         UserDto userDto = modelMapper.map(user, UserDto.class);
-        userDto.setDescription("Nie było w dokumentacji");
+        userDto.setDescription(user.getDescription());
 
         userDto.setFollowingCount(user.getFollowed().size());
         userDto.setFollowersCount(user.getFollowers().size());
@@ -90,7 +90,7 @@ public class UserService implements UserDetailsService {
         postDto.setNickname(user.getNickname());
         postDto.setAvatar(user.getAvatar());
         postDto.setCommentsCount(0);
-        postDto.setLikesCount(generate(0, 20));
+        postDto.setLikesCount(post.getPostReactions().size());
         postDto.setLiked(Math.random() > 0.5);
         return postDto;
     }
