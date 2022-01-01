@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -13,44 +14,15 @@ import java.util.List;
 public class PostController {
 
     private final PostService postService;
+    private final PostMapper postMapper;
 
     @GetMapping("/popular_posts")
-    public ResponseEntity<List<PostDto>> getPopularPosts() {
-        List<PostDto> posts = List.of(
-                new PostDto(
-                        1,
-                        1,
-                        "jan",
-                        "Lubie placki",
-                        null,
-                        null,
-                        0,
-                        0,
-                        true
-                ),
-                new PostDto(
-                        2,
-                        2,
-                        "blazej",
-                        "Nie lubie placki",
-                        null,
-                        null,
-                        0,
-                        0,
-                        true
-                ),
-                new PostDto(
-                        3,
-                        3,
-                        "jan",
-                        "Kocham placki",
-                        null,
-                        null,
-                        0,
-                        0,
-                        true
-                )
-        );
+    public ResponseEntity<List<PostDto>> getPopularPosts(@RequestParam int hours) {
+
+        List<Post> popularPosts = postService.getPopularPosts(hours);
+
+        List<PostDto> posts =  popularPosts.stream().map(post -> postMapper.mapPostToDto(post, post.getUser())).collect(Collectors.toList());
+
 
         return ResponseEntity.ok()
                 .body(posts);

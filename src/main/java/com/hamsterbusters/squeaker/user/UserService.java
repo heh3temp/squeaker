@@ -2,6 +2,7 @@ package com.hamsterbusters.squeaker.user;
 
 import com.hamsterbusters.squeaker.post.Post;
 import com.hamsterbusters.squeaker.post.PostDto;
+import com.hamsterbusters.squeaker.post.PostMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -26,7 +27,8 @@ public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final ModelMapper modelMapper;
+    private final UserMapper userMapper;
+    private final PostMapper postMapper;
 
     public void register(User user) {
 
@@ -56,18 +58,9 @@ public class UserService implements UserDetailsService {
     public UserDto getUserDtoById(int userId) {
         Optional<User> userOptional = userRepository.findById(userId);
         User user = userOptional.orElseThrow(() -> new UsernameNotFoundException("User not found in the database"));
-        return mapUserToDto(user);
+        return userMapper.mapUserToDto(user);
     }
 
-    private UserDto mapUserToDto(User user) {
-        UserDto userDto = modelMapper.map(user, UserDto.class);
-        userDto.setDescription("Nie było w dokumentacji");
-
-        userDto.setFollowingCount(user.getFollowed().size());
-        userDto.setFollowersCount(user.getFollowers().size());
-
-        return userDto;
-    }
 
     public User getUserByNickname(String nickname) {
         Optional<User> userOptional = userRepository.findUserByNickname(nickname);
@@ -80,20 +73,10 @@ public class UserService implements UserDetailsService {
         User user = userOptional.orElseThrow(() -> new UsernameNotFoundException("User not found in the database"));
         List<Post> posts = user.getPosts();
         return posts.stream()
-                .map(post -> mapPostToDto(post, user))
+                .map(post -> postMapper.mapPostToDto(post, user))
                 .collect(Collectors.toList());
     }
 
-    private PostDto mapPostToDto(Post post, User user) {
-        PostDto postDto = modelMapper.map(post, PostDto.class);
-        postDto.setUserId(user.getUserId());
-        postDto.setNickname(user.getNickname());
-        postDto.setAvatar(user.getAvatar());
-        postDto.setCommentsCount(0);
-        postDto.setLikesCount(generate(0, 20));
-        postDto.setLiked(Math.random() > 0.5);
-        return postDto;
-    }
 
     public static int generate(int min, int max) {
         return min + (int)(Math.random() * ((max - min) + 1));
