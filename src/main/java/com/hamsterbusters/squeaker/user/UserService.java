@@ -71,8 +71,7 @@ public class UserService implements UserDetailsService {
 
     public User getUserByNickname(String nickname) {
         Optional<User> userOptional = userRepository.findUserByNickname(nickname);
-        User user = userOptional.orElseThrow(() -> new UsernameNotFoundException("User not found in the database"));
-        return user;
+        return userOptional.orElseThrow(() -> new UsernameNotFoundException("User not found in the database"));
     }
 
     public List<PostDto> getUserPosts(int userId) {
@@ -90,13 +89,13 @@ public class UserService implements UserDetailsService {
         postDto.setNickname(user.getNickname());
         postDto.setAvatar(user.getAvatar());
         postDto.setCommentsCount(0);
-        postDto.setLikesCount(post.getPostReactions().size());
+        postDto.setLikesCount(generate(0, 20));
         postDto.setLiked(Math.random() > 0.5);
         return postDto;
     }
 
     public static int generate(int min, int max) {
-        return min + (int)(Math.random() * ((max - min) + 1));
+        return min + (int) (Math.random() * ((max - min) + 1));
     }
 
 }

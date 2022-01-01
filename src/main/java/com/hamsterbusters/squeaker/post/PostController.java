@@ -57,7 +57,7 @@ public class PostController {
     }
 
     @PostMapping("/post")
-    public ResponseEntity<Void> addPost(@RequestBody CreatePostDto postDto) {
+    public ResponseEntity<Void> addPost(@RequestBody NewPostDto postDto) {
         postService.createNewPost(postDto);
         return ResponseEntity.ok()
                 .build();

@@ -1,8 +1,7 @@
 package com.hamsterbusters.squeaker.user;
 
+import com.hamsterbusters.squeaker.follower.Follower;
 import com.hamsterbusters.squeaker.post.Post;
-import com.hamsterbusters.squeaker.follower.Followed;
-import com.hamsterbusters.squeaker.follower.Followers;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -31,10 +30,10 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Post> posts;
 
-    @OneToMany(mappedBy = "user")
-    private List<Followed> followed;
+    @OneToMany(mappedBy = "followed")
+    private List<Follower> followed;
 
-    @OneToMany(mappedBy = "user")
-    private List<Followers> followers;
+    @OneToMany(mappedBy = "follower")
+    private List<Follower> followers;
 
 }
