@@ -1,11 +1,13 @@
 package com.hamsterbusters.squeaker.post;
 
+import com.hamsterbusters.squeaker.post_reaction.PostReaction;
 import com.hamsterbusters.squeaker.user.User;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -25,5 +27,8 @@ public class Post {
     @ManyToOne
     @JoinColumn(name = "userId", nullable = false, insertable = false, updatable = false)
     private User user;
+
+    @OneToMany(mappedBy = "post")
+    private Set<PostReaction> postReactions;
 
 }

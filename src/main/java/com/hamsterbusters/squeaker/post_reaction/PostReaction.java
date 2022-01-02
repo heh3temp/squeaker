@@ -30,4 +30,18 @@ public class PostReaction {
     @JoinColumn(name = "postId", nullable = false, insertable = false, updatable = false)
     private Post post;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PostReaction)) return false;
+
+        PostReaction that = (PostReaction) o;
+
+        return getPostReactionCompositeKey().equals(that.getPostReactionCompositeKey());
+    }
+
+    @Override
+    public int hashCode() {
+        return getPostReactionCompositeKey().hashCode();
+    }
 }

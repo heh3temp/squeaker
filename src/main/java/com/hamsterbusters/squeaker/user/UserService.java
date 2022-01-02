@@ -2,6 +2,8 @@ package com.hamsterbusters.squeaker.user;
 
 import com.hamsterbusters.squeaker.post.Post;
 import com.hamsterbusters.squeaker.post.PostDto;
+import com.hamsterbusters.squeaker.post_reaction.PostReaction;
+import com.hamsterbusters.squeaker.post_reaction.PostReactionCompositeKey;
 import com.hamsterbusters.squeaker.post.PostMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -75,6 +77,23 @@ public class UserService implements UserDetailsService {
                 .collect(Collectors.toList());
     }
 
+    private PostDto mapPostToDto(Post post, User user) {
+        PostDto postDto = modelMapper.map(post, PostDto.class);
+        postDto.setUserId(user.getUserId());
+        postDto.setNickname(user.getNickname());
+        postDto.setAvatar(user.getAvatar());
+        boolean isLiked = isPostLikedByUser(post, user);
+        postDto.setLiked(isLiked);
+        postDto.setCommentsCount(0);
+        postDto.setLikesCount(post.getPostReactions().size());
+        return postDto;
+    }
+
+    private boolean isPostLikedByUser(Post post, User user) {
+        PostReactionCompositeKey postReactionCompositeKey = new PostReactionCompositeKey(user.getUserId(), post.getPostId());
+        PostReaction postReaction = new PostReaction(postReactionCompositeKey);
+        return post.getPostReactions().contains(postReaction);
+    }
 
     public static int generate(int min, int max) {
         return min + (int) (Math.random() * ((max - min) + 1));
