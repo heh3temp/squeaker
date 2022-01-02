@@ -1,8 +1,13 @@
 package com.hamsterbusters.squeaker.user;
 
+import com.hamsterbusters.squeaker.follower.Follower;
+import com.hamsterbusters.squeaker.follower.FollowerCompositeKey;
+import com.hamsterbusters.squeaker.follower.FollowerRepository;
+import com.hamsterbusters.squeaker.follower.FollowerService;
 import com.hamsterbusters.squeaker.post.Post;
 import com.hamsterbusters.squeaker.post.PostDto;
 import com.hamsterbusters.squeaker.post.PostMapper;
+import com.hamsterbusters.squeaker.user.squeaker.SqueakerProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -28,6 +33,8 @@ public class UserService implements UserDetailsService {
     private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
     private final PostMapper postMapper;
+    private final FollowerService followerService;
+    private final SqueakerProperties squeakerProperties;
 
     public void register(User user) {
 
@@ -39,6 +46,9 @@ public class UserService implements UserDetailsService {
         user.setActive(true);
 
         userRepository.save(user);
+
+        User squeaker = getUserByNickname(squeakerProperties.getNickname());
+        followerService.addSqueakerToFollowed(user.getUserId(), squeaker.getUserId());
     }
 
     @Override

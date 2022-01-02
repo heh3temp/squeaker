@@ -71,4 +71,13 @@ public class FollowerService {
                 .toList();
     }
 
+    public void addSqueakerToFollowed(int userId, int squeakerId) {
+        FollowerCompositeKey followerCompositeKey = new FollowerCompositeKey(
+                squeakerId,
+                userId
+        );
+        Follower follower = new Follower(followerCompositeKey);
+
+        followerRepository.save(follower);
+    }
 }
