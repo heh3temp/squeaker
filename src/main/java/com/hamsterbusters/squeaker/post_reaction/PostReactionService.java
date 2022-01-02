@@ -2,8 +2,11 @@ package com.hamsterbusters.squeaker.post_reaction;
 
 import com.hamsterbusters.squeaker.jwt.JwtTokenVerifier;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class PostReactionService {
@@ -26,7 +29,11 @@ public class PostReactionService {
 
     private void removeReaction(int userId, int postId) {
         PostReactionCompositeKey postReactionCompositeKey = new PostReactionCompositeKey(userId, postId);
-        postReactionRepository.deleteById(postReactionCompositeKey);
+        try {
+            postReactionRepository.deleteById(postReactionCompositeKey);
+        } catch (DataAccessException dataAccessException) {
+            log.warn("Can't delete reaction that does not exist! user_id: {}, post_id: {}", userId, postId);
+        }
     }
 
 }
