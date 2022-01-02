@@ -7,14 +7,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class UserDto {
+public class UserFollowerDto {
 
+    private int userId;
     private String nickname;
     private String description;
-    private Object background;
     private Object avatar;
-    private int followingCount;
-    private int followersCount;
     private boolean followStatus;
 
 }

@@ -1,6 +1,7 @@
 package com.hamsterbusters.squeaker.user;
 
 import com.hamsterbusters.squeaker.post.PostDto;
+import com.hamsterbusters.squeaker.follower.FollowerRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

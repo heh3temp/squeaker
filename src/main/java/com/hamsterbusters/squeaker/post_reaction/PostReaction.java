@@ -15,10 +15,6 @@ import javax.persistence.*;
 @Table(name = "POST_REACTIONS")
 public class PostReaction {
 
-    public PostReaction(PostReactionCompositeKey postReactionCompositeKey) {
-        this.postReactionCompositeKey = postReactionCompositeKey;
-    }
-
     @EmbeddedId
     private PostReactionCompositeKey postReactionCompositeKey;
 
@@ -29,6 +25,10 @@ public class PostReaction {
     @ManyToOne
     @JoinColumn(name = "postId", nullable = false, insertable = false, updatable = false)
     private Post post;
+
+    public PostReaction(PostReactionCompositeKey postReactionCompositeKey) {
+        this.postReactionCompositeKey = postReactionCompositeKey;
+    }
 
     @Override
     public boolean equals(Object o) {
