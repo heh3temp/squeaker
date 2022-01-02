@@ -5,6 +5,11 @@ application:
         secretKey: ${SECRET_KEY:securesecuresecuresecuresecuresecuresecuresecuresecuresecuresecure}
         tokenPrefix: "Bearer "
         tokenExpirationAfterDays: 10
+    squeaker:
+        nickname: squeaker
+        email: squeaker@mail.com
+        password: ${SQUEAKER_PASSWORD:password}
+        description: Squeaking around 🐹
 
 spring:
     datasource:
