@@ -1,6 +1,7 @@
 package com.hamsterbusters.squeaker.user;
 
 import com.hamsterbusters.squeaker.post.PostDto;
+import com.hamsterbusters.squeaker.follower.FollowerRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -38,8 +39,8 @@ public class UserController {
     }
 
     @PostMapping("/user/{userId}/follow")
-    public ResponseEntity<Void> followUser(@PathVariable int userId) {
-        userService.followUser(userId);
+    public ResponseEntity<Void> followUser(@PathVariable int userId, @RequestBody FollowerRequest followerRequest) {
+        userService.followUser(userId, followerRequest);
         return ResponseEntity.ok().build();
     }
 
