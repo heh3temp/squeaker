@@ -25,13 +25,11 @@ public class PostService {
 
     public List<PostDto> getPopularPosts(int hours) {
         List<Post> popularPosts = postRepository.findByCreationDateGreaterThan(LocalDateTime.now().minusHours(hours));
-        List<PostDto> popularPostsDto = popularPosts.stream()
+
+        return popularPosts.stream()
                 .map(post -> postMapper.mapPostToDto(post, post.getUser()))
+                .sorted(Comparator.comparing(PostDto::getLikesCount).reversed())
                 .collect(Collectors.toList());
-
-        Collections.sort(popularPostsDto, Comparator.comparing(PostDto::getLikesCount).reversed());
-
-        return popularPostsDto;
     }
 
 }
