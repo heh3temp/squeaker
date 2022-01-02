@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,6 +28,7 @@ public class PostService {
 
         return popularPosts.stream()
                 .map(post -> postMapper.mapPostToDto(post, post.getUser()))
+                .sorted(Comparator.comparing(PostDto::getLikesCount).reversed())
                 .collect(Collectors.toList());
     }
 
