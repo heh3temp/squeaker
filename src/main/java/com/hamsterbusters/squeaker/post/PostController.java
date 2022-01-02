@@ -33,4 +33,12 @@ public class PostController {
                 .build();
     }
 
+    @GetMapping("/posts")
+    public ResponseEntity<List<PostDto>> getFollowedPosts() {
+
+        List<PostDto> followedPosts = postService.getFollowedPosts();
+
+        return  ResponseEntity.ok()
+                .body(followedPosts);
+    }
 }
