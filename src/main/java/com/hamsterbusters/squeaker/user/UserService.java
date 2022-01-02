@@ -3,11 +3,6 @@ package com.hamsterbusters.squeaker.user;
 import com.hamsterbusters.squeaker.post.Post;
 import com.hamsterbusters.squeaker.post.PostDto;
 import com.hamsterbusters.squeaker.post.PostMapper;
-import com.hamsterbusters.squeaker.follower.Follower;
-import com.hamsterbusters.squeaker.follower.FollowerRepository;
-import com.hamsterbusters.squeaker.follower.FollowerCompositeKey;
-import com.hamsterbusters.squeaker.follower.FollowerRequest;
-import com.hamsterbusters.squeaker.jwt.JwtTokenVerifier;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -30,7 +25,6 @@ import java.util.stream.Collectors;
 public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
-    private final FollowerRepository followerRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
     private final PostMapper postMapper;
@@ -82,16 +76,6 @@ public class UserService implements UserDetailsService {
 
     public static int generate(int min, int max) {
         return min + (int) (Math.random() * ((max - min) + 1));
-    }
-
-    public void followUser(Integer userId, FollowerRequest followerRequest) {
-        FollowerCompositeKey followerCompositeKey = new FollowerCompositeKey(userId, JwtTokenVerifier.getPrincipalFromJwtToken());
-        Follower follower = new Follower(followerCompositeKey);
-        if(followerRequest.isFollow()) {
-            followerRepository.save(follower);
-        } else {
-            followerRepository.deleteById(followerCompositeKey);
-        }
     }
 
 }

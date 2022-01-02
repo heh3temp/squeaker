@@ -38,10 +38,4 @@ public class UserController {
                 .body(userPosts);
     }
 
-    @PostMapping("/user/{userId}/follow")
-    public ResponseEntity<Void> followUser(@PathVariable int userId, @RequestBody FollowerRequest followerRequest) {
-        userService.followUser(userId, followerRequest);
-        return ResponseEntity.ok().build();
-    }
-
 }
