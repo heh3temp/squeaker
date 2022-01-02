@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,10 +25,13 @@ public class PostService {
 
     public List<PostDto> getPopularPosts(int hours) {
         List<Post> popularPosts = postRepository.findByCreationDateGreaterThan(LocalDateTime.now().minusHours(hours));
-
-        return popularPosts.stream()
+        List<PostDto> popularPostsDto = popularPosts.stream()
                 .map(post -> postMapper.mapPostToDto(post, post.getUser()))
                 .collect(Collectors.toList());
+
+        Collections.sort(popularPostsDto, Comparator.comparing(PostDto::getLikesCount).reversed());
+
+        return popularPostsDto;
     }
 
 }
