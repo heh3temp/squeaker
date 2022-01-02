@@ -63,4 +63,10 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
 
         filterChain.doFilter(request, response);
     }
+
+    public static int getPrincipalFromJwtToken() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return Integer.parseInt((String) authentication.getPrincipal());
+    }
+
 }

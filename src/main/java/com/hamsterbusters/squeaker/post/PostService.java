@@ -1,14 +1,11 @@
 package com.hamsterbusters.squeaker.post;
 
+import com.hamsterbusters.squeaker.jwt.JwtTokenVerifier;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -20,14 +17,8 @@ public class PostService {
 
     public void createNewPost(NewPostDto postDto) {
         Post post = postMapper.mapDtoToPost(postDto);
-        post.setUserId(getPrincipalFromJwtToken());
+        post.setUserId(JwtTokenVerifier.getPrincipalFromJwtToken());
         postRepository.save(post);
-    }
-
-    private int getPrincipalFromJwtToken() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return Integer.parseInt((String) authentication.getPrincipal());
-
     }
 
     public List<PostDto> getPopularPosts(int hours) {
@@ -37,4 +28,5 @@ public class PostService {
                 .map(post -> postMapper.mapPostToDto(post, post.getUser()))
                 .collect(Collectors.toList());
     }
+
 }

@@ -1,5 +1,7 @@
 package com.hamsterbusters.squeaker.post;
 
+import com.hamsterbusters.squeaker.post_reaction.PostReaction;
+import com.hamsterbusters.squeaker.post_reaction.PostReactionCompositeKey;
 import com.hamsterbusters.squeaker.user.User;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -21,10 +23,17 @@ public class PostMapper {
         postDto.setUserId(user.getUserId());
         postDto.setNickname(user.getNickname());
         postDto.setAvatar(user.getAvatar());
+        boolean isLiked = isPostLikedByUser(post, user);
+        postDto.setLiked(isLiked);
         postDto.setCommentsCount(0);
-        postDto.setLikesCount(generate(0, 20));
-        postDto.setLiked(Math.random() > 0.5);
+        postDto.setLikesCount(post.getPostReactions().size());
         return postDto;
+    }
+
+    private boolean isPostLikedByUser(Post post, User user) {
+        PostReactionCompositeKey postReactionCompositeKey = new PostReactionCompositeKey(user.getUserId(), post.getPostId());
+        PostReaction postReaction = new PostReaction(postReactionCompositeKey);
+        return post.getPostReactions().contains(postReaction);
     }
 
     public Post mapDtoToPost(NewPostDto postDto) {

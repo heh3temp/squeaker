@@ -5,7 +5,6 @@ import com.hamsterbusters.squeaker.post.PostDto;
 import com.hamsterbusters.squeaker.post.PostMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -74,7 +73,6 @@ public class UserService implements UserDetailsService {
                 .map(post -> postMapper.mapPostToDto(post, user))
                 .collect(Collectors.toList());
     }
-
 
     public static int generate(int min, int max) {
         return min + (int) (Math.random() * ((max - min) + 1));
