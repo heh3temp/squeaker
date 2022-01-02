@@ -6,7 +6,7 @@ application:
         tokenPrefix: "Bearer "
         tokenExpirationAfterDays: 10
     squeaker:
-        nickname: squeaker
+        nickname: Squeaker
         email: squeaker@mail.com
         password: ${SQUEAKER_PASSWORD:password}
         description: Squeaking around 🐹

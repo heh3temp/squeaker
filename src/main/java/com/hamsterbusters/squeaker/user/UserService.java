@@ -1,8 +1,5 @@
 package com.hamsterbusters.squeaker.user;
 
-import com.hamsterbusters.squeaker.follower.Follower;
-import com.hamsterbusters.squeaker.follower.FollowerCompositeKey;
-import com.hamsterbusters.squeaker.follower.FollowerRepository;
 import com.hamsterbusters.squeaker.follower.FollowerService;
 import com.hamsterbusters.squeaker.post.Post;
 import com.hamsterbusters.squeaker.post.PostDto;
@@ -18,10 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -81,6 +75,7 @@ public class UserService implements UserDetailsService {
         List<Post> posts = user.getPosts();
         return posts.stream()
                 .map(post -> postMapper.mapPostToDto(post, user))
+                .sorted(Comparator.comparing(PostDto::getCreationDate).reversed())
                 .collect(Collectors.toList());
     }
 
