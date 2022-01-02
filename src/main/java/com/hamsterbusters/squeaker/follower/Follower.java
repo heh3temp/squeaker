@@ -29,4 +29,20 @@ public class Follower {
     public Follower(FollowerCompositeKey followerCompositeKey) {
         this.followerCompositeKey = followerCompositeKey;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Follower)) return false;
+
+        Follower follower = (Follower) o;
+
+        return getFollowerCompositeKey().equals(follower.getFollowerCompositeKey());
+    }
+
+    @Override
+    public int hashCode() {
+        return getFollowerCompositeKey().hashCode();
+    }
+
 }

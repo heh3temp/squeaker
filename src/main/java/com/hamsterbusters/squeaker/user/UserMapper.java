@@ -1,5 +1,8 @@
 package com.hamsterbusters.squeaker.user;
 
+import com.hamsterbusters.squeaker.follower.Follower;
+import com.hamsterbusters.squeaker.follower.FollowerCompositeKey;
+import com.hamsterbusters.squeaker.jwt.JwtTokenVerifier;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
@@ -17,7 +20,18 @@ public class UserMapper {
 
         userDto.setFollowingCount(user.getFollowed().size());
         userDto.setFollowersCount(user.getFollowers().size());
+        boolean isFollowed = isFollowedByUser(user);
+        userDto.setFollowStatus(isFollowed);
 
         return userDto;
+    }
+
+    private boolean isFollowedByUser(User user) {
+        FollowerCompositeKey followerCompositeKey = new FollowerCompositeKey(
+                user.getUserId(),
+                JwtTokenVerifier.getPrincipalFromJwtToken()
+        );
+        Follower follower = new Follower(followerCompositeKey);
+        return user.getFollowers().contains(follower);
     }
 }

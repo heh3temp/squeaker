@@ -87,7 +87,7 @@ public class UserService implements UserDetailsService {
     public void followUser(Integer userId, FollowerRequest followerRequest) {
         FollowerCompositeKey followerCompositeKey = new FollowerCompositeKey(userId, JwtTokenVerifier.getPrincipalFromJwtToken());
         Follower follower = new Follower(followerCompositeKey);
-        if(followerRequest.getFollow()) {
+        if(followerRequest.isFollow()) {
             followerRepository.save(follower);
         } else {
             followerRepository.deleteById(followerCompositeKey);

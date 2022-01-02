@@ -15,5 +15,6 @@ public class UserDto {
     private Object avatar;
     private int followingCount;
     private int followersCount;
+    private boolean followStatus;
 
 }

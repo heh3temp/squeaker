@@ -8,6 +8,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -30,10 +31,10 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Post> posts;
 
-    @OneToMany(mappedBy = "followed")
-    private List<Follower> followed;
-
     @OneToMany(mappedBy = "follower")
-    private List<Follower> followers;
+    private Set<Follower> followed;
+
+    @OneToMany(mappedBy = "followed")
+    private Set<Follower> followers;
 
 }
