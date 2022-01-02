@@ -22,7 +22,6 @@ public class UserMapper {
         userDto.setFollowersCount(user.getFollowers().size());
         boolean isFollowed = isFollowedByUser(user);
         userDto.setFollowStatus(isFollowed);
-
         return userDto;
     }
 
@@ -34,4 +33,13 @@ public class UserMapper {
         Follower follower = new Follower(followerCompositeKey);
         return user.getFollowers().contains(follower);
     }
+
+    public UserFollowerDto mapUserToUserFollowerDto(User user) {
+        UserFollowerDto userDto = modelMapper.map(user, UserFollowerDto.class);
+
+        boolean isFollowed = isFollowedByUser(user);
+        userDto.setFollowStatus(isFollowed);
+        return userDto;
+    }
+
 }

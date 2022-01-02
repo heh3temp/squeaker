@@ -1,11 +1,11 @@
 package com.hamsterbusters.squeaker.follower;
 
+import com.hamsterbusters.squeaker.user.UserFollowerDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -19,5 +19,18 @@ public class FollowerController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/user/{userId}/followed")
+    public ResponseEntity<List<UserFollowerDto>> getUserFollowed(@PathVariable int userId) {
+        List<UserFollowerDto> userFollowerDtos = followerService.getUserFollowed(userId);
+        return ResponseEntity.ok()
+                .body(userFollowerDtos);
+    }
+
+    @GetMapping("/user/{userId}/followers")
+    public ResponseEntity<List<UserFollowerDto>> getUserFollowers(@PathVariable int userId) {
+        List<UserFollowerDto> userFollowerDtos = followerService.getUserFollowers(userId);
+        return ResponseEntity.ok()
+                .body(userFollowerDtos);
+    }
 
 }
