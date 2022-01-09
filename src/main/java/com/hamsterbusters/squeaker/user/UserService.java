@@ -1,6 +1,7 @@
 package com.hamsterbusters.squeaker.user;
 
 import com.hamsterbusters.squeaker.follower.FollowerService;
+import com.hamsterbusters.squeaker.jwt.JwtTokenVerifier;
 import com.hamsterbusters.squeaker.post.Post;
 import com.hamsterbusters.squeaker.post.PostDto;
 import com.hamsterbusters.squeaker.post.PostMapper;
@@ -13,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -51,11 +53,12 @@ public class UserService implements UserDetailsService {
         User user = userOptional.orElseThrow(() -> new UsernameNotFoundException("User not found in the database"));
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
 
-        return new org.springframework.security.core.userdetails.User(
-                user.getNickname(),
-                user.getPassword(),
-                authorities
-        );
+        return org.springframework.security.core.userdetails.User.builder()
+                .username(user.getNickname())
+                .password(user.getPassword())
+                .authorities(authorities)
+                .disabled(!user.isActive())
+                .build();
     }
 
     public UserDto getUserDtoById(int userId) {
@@ -83,4 +86,35 @@ public class UserService implements UserDetailsService {
         return min + (int) (Math.random() * ((max - min) + 1));
     }
 
+    @Transactional
+    public void updateUser(UpdateUserDto userDto) {
+        int userId = JwtTokenVerifier.getPrincipalFromJwtToken();
+        Optional<User> userOptional = userRepository.findById(userId);
+        User user = userOptional.orElseThrow(() -> new UsernameNotFoundException("User not found in the database"));
+
+        String nickname = userDto.getNickname();
+        if (nickname != null)
+            user.setNickname(nickname);
+
+        String description = userDto.getDescription();
+        if (description != null)
+            user.setDescription(description);
+
+        String email = userDto.getEmail();
+        if (email != null)
+            user.setEmail(email);
+
+        String password = userDto.getPassword();
+        if (password != null)
+            user.setPassword(passwordEncoder.encode(password));
+    }
+
+    @Transactional
+    public void deleteUser() {
+        int userId = JwtTokenVerifier.getPrincipalFromJwtToken();
+        Optional<User> userOptional = userRepository.findById(userId);
+        User user = userOptional.orElseThrow(() -> new UsernameNotFoundException("User not found in the database"));
+        user.setActive(false);
+        user.setEmail("****");
+    }
 }

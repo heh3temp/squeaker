@@ -38,3 +38,4 @@ out/
 
 /sql/
 /trash/
+docker/.env
