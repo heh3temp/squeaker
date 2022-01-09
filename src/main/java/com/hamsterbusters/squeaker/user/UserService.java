@@ -53,11 +53,12 @@ public class UserService implements UserDetailsService {
         User user = userOptional.orElseThrow(() -> new UsernameNotFoundException("User not found in the database"));
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
 
-        return new org.springframework.security.core.userdetails.User(
-                user.getNickname(),
-                user.getPassword(),
-                authorities
-        );
+        return org.springframework.security.core.userdetails.User.builder()
+                .username(user.getNickname())
+                .password(user.getPassword())
+                .authorities(authorities)
+                .disabled(!user.isActive())
+                .build();
     }
 
     public UserDto getUserDtoById(int userId) {
@@ -106,5 +107,14 @@ public class UserService implements UserDetailsService {
         String password = userDto.getPassword();
         if (password != null)
             user.setPassword(passwordEncoder.encode(password));
+    }
+
+    @Transactional
+    public void deleteUser() {
+        int userId = JwtTokenVerifier.getPrincipalFromJwtToken();
+        Optional<User> userOptional = userRepository.findById(userId);
+        User user = userOptional.orElseThrow(() -> new UsernameNotFoundException("User not found in the database"));
+        user.setActive(false);
+        user.setEmail("****");
     }
 }
