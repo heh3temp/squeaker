@@ -1,6 +1,7 @@
 package com.hamsterbusters.squeaker.user;
 
 import com.hamsterbusters.squeaker.follower.FollowerService;
+import com.hamsterbusters.squeaker.jwt.JwtTokenVerifier;
 import com.hamsterbusters.squeaker.post.Post;
 import com.hamsterbusters.squeaker.post.PostDto;
 import com.hamsterbusters.squeaker.post.PostMapper;
@@ -85,7 +86,8 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public void updateUser(int userId, UpdateUserDto userDto) {
+    public void updateUser(UpdateUserDto userDto) {
+        int userId = JwtTokenVerifier.getPrincipalFromJwtToken();
         Optional<User> userOptional = userRepository.findById(userId);
         User user = userOptional.orElseThrow(() -> new UsernameNotFoundException("User not found in the database"));
 

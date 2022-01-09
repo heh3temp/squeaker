@@ -1,5 +1,6 @@
 package com.hamsterbusters.squeaker.user;
 
+import com.hamsterbusters.squeaker.jwt.JwtTokenVerifier;
 import com.hamsterbusters.squeaker.post.PostDto;
 import com.hamsterbusters.squeaker.follower.FollowerRequest;
 import lombok.RequiredArgsConstructor;
@@ -30,9 +31,9 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
-    @PatchMapping("/user/{userId}")
-    public ResponseEntity<Void> updateUser(@PathVariable int userId, @RequestBody UpdateUserDto updateUserDto) {
-        userService.updateUser(userId, updateUserDto);
+    @PatchMapping("/user")
+    public ResponseEntity<Void> updateUser(@RequestBody UpdateUserDto updateUserDto) {
+        userService.updateUser(updateUserDto);
         return ResponseEntity.ok().build();
     }
 
