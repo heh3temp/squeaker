@@ -1,6 +1,7 @@
 package com.hamsterbusters.squeaker.comment;
 
-import com.hamsterbusters.squeaker.post.Post;
+import com.hamsterbusters.squeaker.user.User;
+import com.hamsterbusters.squeaker.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
@@ -18,5 +19,17 @@ public class CommentMapper {
         comment.setCreationDate(LocalDateTime.now());
         comment.setModificationDate(LocalDateTime.now());
         return comment;
+    }
+
+    public CommentDto mapCommentToDto(Comment comment) {
+        CommentDto commentDto = modelMapper.map(comment, CommentDto.class);
+
+        User user = comment.getUser();
+        commentDto.setNickname(user.getNickname());
+        commentDto.setAvatar(user.getAvatar());
+        commentDto.setLikesCount(UserService.generate(0, 20));
+        commentDto.setLiked(Math.random() < 0.5);
+
+        return commentDto;
     }
 }

@@ -4,6 +4,8 @@ import com.hamsterbusters.squeaker.jwt.JwtTokenVerifier;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class CommentService {
@@ -19,4 +21,10 @@ public class CommentService {
         commentRepository.save(comment);
     }
 
+    public List<CommentDto> getComments(int postId) {
+        return commentRepository.findCommentsByPostId(postId)
+                .stream()
+                .map(commentMapper::mapCommentToDto)
+                .toList();
+    }
 }
