@@ -1,26 +1,24 @@
-package com.hamsterbusters.squeaker.post;
+package com.hamsterbusters.squeaker.comment;
 
-import com.hamsterbusters.squeaker.comment.Comment;
-import com.hamsterbusters.squeaker.post.reaction.PostReaction;
+import com.hamsterbusters.squeaker.post.Post;
 import com.hamsterbusters.squeaker.user.User;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "POSTS")
-public class Post {
+@Table(name = "COMMENTS")
+public class Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer postId;
+    private Integer commentId;
     private Integer userId;
+    private Integer postId;
     private String body;
     private LocalDateTime creationDate;
     private LocalDateTime modificationDate;
@@ -30,10 +28,8 @@ public class Post {
     @JoinColumn(name = "userId", nullable = false, insertable = false, updatable = false)
     private User user;
 
-    @OneToMany(mappedBy = "post")
-    private List<Comment> comments;
-
-    @OneToMany(mappedBy = "post")
-    private Set<PostReaction> postReactions;
+    @ManyToOne
+    @JoinColumn(name = "postId", nullable = false, insertable = false, updatable = false)
+    private Post post;
 
 }

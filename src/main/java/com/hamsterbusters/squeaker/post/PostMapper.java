@@ -1,16 +1,14 @@
 package com.hamsterbusters.squeaker.post;
 
 import com.hamsterbusters.squeaker.jwt.JwtTokenVerifier;
-import com.hamsterbusters.squeaker.post_reaction.PostReaction;
-import com.hamsterbusters.squeaker.post_reaction.PostReactionCompositeKey;
+import com.hamsterbusters.squeaker.post.reaction.PostReaction;
+import com.hamsterbusters.squeaker.post.reaction.PostReactionCompositeKey;
 import com.hamsterbusters.squeaker.user.User;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-
-import static com.hamsterbusters.squeaker.user.UserService.generate;
 
 
 @RequiredArgsConstructor
