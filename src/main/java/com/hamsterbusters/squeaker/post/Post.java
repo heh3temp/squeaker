@@ -1,7 +1,7 @@
 package com.hamsterbusters.squeaker.post;
 
 import com.hamsterbusters.squeaker.comment.Comment;
-import com.hamsterbusters.squeaker.post_reaction.PostReaction;
+import com.hamsterbusters.squeaker.post.reaction.PostReaction;
 import com.hamsterbusters.squeaker.user.User;
 import lombok.Getter;
 import lombok.Setter;

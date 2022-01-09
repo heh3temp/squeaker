@@ -1,4 +1,4 @@
-package com.hamsterbusters.squeaker.post_reaction;
+package com.hamsterbusters.squeaker.post.reaction;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

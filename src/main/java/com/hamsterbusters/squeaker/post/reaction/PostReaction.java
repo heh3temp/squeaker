@@ -1,4 +1,4 @@
-package com.hamsterbusters.squeaker.post_reaction;
+package com.hamsterbusters.squeaker.post.reaction;
 
 import com.hamsterbusters.squeaker.post.Post;
 import com.hamsterbusters.squeaker.user.User;
