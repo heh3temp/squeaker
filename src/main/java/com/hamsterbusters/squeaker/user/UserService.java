@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -83,4 +84,25 @@ public class UserService implements UserDetailsService {
         return min + (int) (Math.random() * ((max - min) + 1));
     }
 
+    @Transactional
+    public void updateUser(int userId, UpdateUserDto userDto) {
+        Optional<User> userOptional = userRepository.findById(userId);
+        User user = userOptional.orElseThrow(() -> new UsernameNotFoundException("User not found in the database"));
+
+        String nickname = userDto.getNickname();
+        if (nickname != null)
+            user.setNickname(nickname);
+
+        String description = userDto.getDescription();
+        if (description != null)
+            user.setDescription(description);
+
+        String email = userDto.getEmail();
+        if (email != null)
+            user.setEmail(email);
+
+        String password = userDto.getPassword();
+        if (password != null)
+            user.setPassword(passwordEncoder.encode(password));
+    }
 }

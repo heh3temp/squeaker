@@ -26,8 +26,13 @@ public class UserController {
 
     @PostMapping("/user")
     public ResponseEntity<Void> addUser(@RequestBody User user) {
-        log.debug(user.toString());
         userService.register(user);
+        return ResponseEntity.ok().build();
+    }
+
+    @PatchMapping("/user/{userId}")
+    public ResponseEntity<Void> updateUser(@PathVariable int userId, @RequestBody UpdateUserDto updateUserDto) {
+        userService.updateUser(userId, updateUserDto);
         return ResponseEntity.ok().build();
     }
 
