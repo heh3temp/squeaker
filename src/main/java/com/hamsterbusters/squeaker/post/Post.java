@@ -30,10 +30,10 @@ public class Post {
     @JoinColumn(name = "userId", nullable = false, insertable = false, updatable = false)
     private User user;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     private List<Comment> comments;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     private Set<PostReaction> postReactions;
 
 }
