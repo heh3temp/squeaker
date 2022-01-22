@@ -15,7 +15,6 @@ import java.util.List;
 public class PostController {
 
     private final PostService postService;
-    private final PostMapper postMapper;
 
     @GetMapping("/popular_posts")
     public ResponseEntity<List<PostDto>> getPopularPosts(@RequestParam int hours) {

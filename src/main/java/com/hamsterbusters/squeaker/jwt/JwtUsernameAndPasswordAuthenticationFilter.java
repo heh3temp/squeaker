@@ -73,8 +73,8 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
 
         response.addHeader(jwtConfig.getAuthorizationHeader(), jwtConfig.getTokenPrefix() + token);
 
-        Map<String, String> userData = new HashMap<>();
-        userData.put("userId", user.getUserId().toString());
+        Map<String, Object> userData = new HashMap<>();
+        userData.put("userId", user.getUserId());
         userData.put("nickname", user.getNickname());
         userData.put("avatar", null);
 
