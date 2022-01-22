@@ -62,4 +62,14 @@ public class PostService {
                 .sorted(Comparator.comparing(PostDto::getCreationDate).reversed())
                 .collect(Collectors.toList());
     }
+
+    public void deletePost(int postId) {
+        int userId = JwtTokenVerifier.getPrincipalFromJwtToken();
+        int authorId = postRepository.getById(postId).getUserId();
+
+        if (userId != authorId) {
+            throw new IllegalOperationException("Posts can only be deleted by the author");
+        }
+        postRepository.deleteById(postId);
+    }
 }
