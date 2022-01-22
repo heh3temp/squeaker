@@ -68,7 +68,8 @@ public class PostService {
         int authorId = postRepository.getById(postId).getUserId();
 
         if (userId == authorId) {
-            postRepository.deleteById(postId);
+            throw new IllegalOperationException("Posts can only be deleted by the author");
         }
+        postRepository.deleteById(postId);
     }
 }
