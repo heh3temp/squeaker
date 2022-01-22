@@ -40,7 +40,10 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/user")
                     .permitAll()
                 .anyRequest()
-                .authenticated();
+                .authenticated()
+                .and()
+                .exceptionHandling()
+                    .authenticationEntryPoint(new CustomAuthenticationEntryPoint());
     }
 
     @Override
