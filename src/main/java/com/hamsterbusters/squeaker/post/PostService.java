@@ -67,7 +67,7 @@ public class PostService {
         int userId = JwtTokenVerifier.getPrincipalFromJwtToken();
         int authorId = postRepository.getById(postId).getUserId();
 
-        if (userId == authorId) {
+        if (userId != authorId) {
             throw new IllegalOperationException("Posts can only be deleted by the author");
         }
         postRepository.deleteById(postId);
