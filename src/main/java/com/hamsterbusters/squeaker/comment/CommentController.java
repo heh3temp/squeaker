@@ -1,5 +1,7 @@
 package com.hamsterbusters.squeaker.comment;
 
+import com.hamsterbusters.squeaker.comment.dto.CommentDto;
+import com.hamsterbusters.squeaker.comment.dto.NewCommentDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

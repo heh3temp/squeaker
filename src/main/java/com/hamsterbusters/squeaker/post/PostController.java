@@ -1,13 +1,13 @@
 package com.hamsterbusters.squeaker.post;
 
+import com.hamsterbusters.squeaker.post.dto.NewPostDto;
+import com.hamsterbusters.squeaker.post.dto.PostDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor

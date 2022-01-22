@@ -3,6 +3,8 @@ package com.hamsterbusters.squeaker.user;
 import com.hamsterbusters.squeaker.follower.Follower;
 import com.hamsterbusters.squeaker.follower.FollowerCompositeKey;
 import com.hamsterbusters.squeaker.jwt.JwtTokenVerifier;
+import com.hamsterbusters.squeaker.user.dto.UserDto;
+import com.hamsterbusters.squeaker.user.dto.UserFollowerDto;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;

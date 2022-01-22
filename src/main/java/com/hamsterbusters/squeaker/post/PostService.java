@@ -2,18 +2,17 @@ package com.hamsterbusters.squeaker.post;
 
 import com.hamsterbusters.squeaker.follower.Follower;
 import com.hamsterbusters.squeaker.jwt.JwtTokenVerifier;
+import com.hamsterbusters.squeaker.post.dto.NewPostDto;
+import com.hamsterbusters.squeaker.post.dto.PostDto;
 import com.hamsterbusters.squeaker.user.User;
 import com.hamsterbusters.squeaker.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -47,15 +46,13 @@ public class PostService {
             User followedUser = follower.getFollowed();
             followedPosts.addAll(
                     followedUser.getPosts().stream()
-                            .map(post -> postMapper.mapPostToDto(post, followedUser))
-                            .collect(Collectors.toList())
+                            .map(post -> postMapper.mapPostToDto(post, followedUser)).toList()
             );
         }
 
         followedPosts.addAll(
                 user.getPosts().stream()
-                        .map(post -> postMapper.mapPostToDto(post, user))
-                        .collect(Collectors.toList())
+                        .map(post -> postMapper.mapPostToDto(post, user)).toList()
         );
 
         return followedPosts.stream()

@@ -1,4 +1,4 @@
-package com.hamsterbusters.squeaker.comment;
+package com.hamsterbusters.squeaker.comment.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

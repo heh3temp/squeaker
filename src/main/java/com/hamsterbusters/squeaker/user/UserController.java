@@ -1,6 +1,8 @@
 package com.hamsterbusters.squeaker.user;
 
-import com.hamsterbusters.squeaker.post.PostDto;
+import com.hamsterbusters.squeaker.post.dto.PostDto;
+import com.hamsterbusters.squeaker.user.dto.UpdateUserDto;
+import com.hamsterbusters.squeaker.user.dto.UserDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
