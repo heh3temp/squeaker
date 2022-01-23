@@ -22,7 +22,8 @@ CREATE TABLE IF NOT EXISTS users (
     last_activity TIMESTAMP NOT NULL,
     is_active BOOLEAN NOT NULL,
     description VARCHAR(4000),
-    avatar VARCHAR(4000)
+    avatar VARCHAR(4000),
+    bg_image VARCHAR(4000)
 );
 
 

@@ -29,6 +29,7 @@ public class User {
     private boolean isActive;
     private String description;
     private String avatar;
+    private  String bgImage;
 
     @OneToMany(mappedBy = "user")
     private List<Post> posts;
