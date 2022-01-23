@@ -24,7 +24,7 @@ public class Post {
     private String body;
     private LocalDateTime creationDate;
     private LocalDateTime modificationDate;
-    private byte[] picture;
+    private String picture;
 
     @ManyToOne
     @JoinColumn(name = "userId", nullable = false, insertable = false, updatable = false)
