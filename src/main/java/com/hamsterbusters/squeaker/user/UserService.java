@@ -3,8 +3,12 @@ package com.hamsterbusters.squeaker.user;
 import com.hamsterbusters.squeaker.follower.FollowerService;
 import com.hamsterbusters.squeaker.jwt.JwtTokenVerifier;
 import com.hamsterbusters.squeaker.post.Post;
-import com.hamsterbusters.squeaker.post.PostDto;
+import com.hamsterbusters.squeaker.post.dto.PostDto;
 import com.hamsterbusters.squeaker.post.PostMapper;
+import com.hamsterbusters.squeaker.user.dto.UpdateUserDto;
+import com.hamsterbusters.squeaker.user.dto.UserDto;
+import com.hamsterbusters.squeaker.user.dto.CreateUserDto;
+import com.hamsterbusters.squeaker.user.exception.InvalidUserDataException;
 import com.hamsterbusters.squeaker.user.squeaker.SqueakerProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,15 +44,15 @@ public class UserService implements UserDetailsService {
     public void register(CreateUserDto createUserDto) {
 
         if (!this.isValidEmail(createUserDto.getEmail())) {
-            throw new InvalidValueException("Invalid email");
+            throw new InvalidUserDataException("Invalid email");
         }
 
         if (!this.isValidPassword(createUserDto.getPassword())) {
-            throw new InvalidValueException("Invalid password. Must be between 8 and 100 characters and include small and large letters, digits and special characters.");
+            throw new InvalidUserDataException("Invalid password. Must be between 8 and 100 characters and include small and large letters, digits and special characters.");
         }
 
         if (!this.isValidNickname(createUserDto.getNickname())) {
-            throw new InvalidValueException("Invalid nickname. Valid can include letters, digits, underscores and must be between 3 and 40 characters long");
+            throw new InvalidUserDataException("Invalid nickname. Valid can include letters, digits, underscores and must be between 3 and 40 characters long");
         }
 
         String encodedPassword = passwordEncoder.encode(createUserDto.getPassword());
@@ -63,7 +67,7 @@ public class UserService implements UserDetailsService {
         try {
             userRepository.save(user);
         } catch (DataIntegrityViolationException e) {
-            throw new InvalidValueException("Nickname and email must be unique");
+            throw new InvalidUserDataException("Nickname and email must be unique", e);
         }
 
 
@@ -119,7 +123,7 @@ public class UserService implements UserDetailsService {
         String nickname = userDto.getNickname();
         if (nickname != null) {
             if (!this.isValidNickname(nickname)) {
-                throw new InvalidValueException("Invalid nickname. Valid can include letters, digits, underscores and must be between 3 and 40 characters long");
+                throw new InvalidUserDataException("Invalid nickname. Valid can include letters, digits, underscores and must be between 3 and 40 characters long");
             }
             user.setNickname(nickname);
         }
@@ -132,7 +136,7 @@ public class UserService implements UserDetailsService {
         String email = userDto.getEmail();
         if (email != null) {
             if (!this.isValidEmail(email)) {
-                throw new InvalidValueException("Invalid email");
+                throw new InvalidUserDataException("Invalid email");
             }
             user.setEmail(email);
         }
@@ -140,7 +144,7 @@ public class UserService implements UserDetailsService {
         String password = userDto.getPassword();
         if (password != null) {
             if (!this.isValidPassword(password)) {
-                throw new InvalidValueException("Invalid password. Must be between 8 and 100 characters and include small and large letters, digits and special characters.");
+                throw new InvalidUserDataException("Invalid password. Must be between 8 and 100 characters and include small and large letters, digits and special characters.");
             }
             user.setPassword(passwordEncoder.encode(password));
         }

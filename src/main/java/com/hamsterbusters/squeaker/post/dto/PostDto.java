@@ -1,4 +1,4 @@
-package com.hamsterbusters.squeaker.comment;
+package com.hamsterbusters.squeaker.post.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,12 +11,15 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CommentDto {
+public class PostDto {
 
+    private int postId;
     private int userId;
     private String nickname;
-    private String avatar;
     private String body;
+    private String picture;
+    private String avatar;
+    private int commentsCount;
     private int likesCount;
     private boolean liked;
     private LocalDateTime creationDate;

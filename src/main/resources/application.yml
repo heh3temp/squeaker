@@ -4,7 +4,7 @@ application:
     jwt:
         secretKey: ${SECRET_KEY:securesecuresecuresecuresecuresecuresecuresecuresecuresecuresecure}
         tokenPrefix: "Bearer "
-        tokenExpirationAfterDays: 10
+        tokenExpirationAfterMinutes: 60
     squeaker:
         nickname: Squeaker
         email: squeaker@mail.com

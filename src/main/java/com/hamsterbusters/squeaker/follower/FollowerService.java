@@ -2,7 +2,7 @@ package com.hamsterbusters.squeaker.follower;
 
 import com.hamsterbusters.squeaker.jwt.JwtTokenVerifier;
 import com.hamsterbusters.squeaker.user.User;
-import com.hamsterbusters.squeaker.user.UserFollowerDto;
+import com.hamsterbusters.squeaker.user.dto.UserFollowerDto;
 import com.hamsterbusters.squeaker.user.UserMapper;
 import com.hamsterbusters.squeaker.user.UserRepository;
 import lombok.RequiredArgsConstructor;

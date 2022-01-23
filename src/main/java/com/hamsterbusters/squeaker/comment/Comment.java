@@ -20,9 +20,9 @@ public class Comment {
     private Integer userId;
     private Integer postId;
     private String body;
+    private String picture;
     private LocalDateTime creationDate;
     private LocalDateTime modificationDate;
-    private byte[] picture;
 
     @ManyToOne
     @JoinColumn(name = "userId", nullable = false, insertable = false, updatable = false)

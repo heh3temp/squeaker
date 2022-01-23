@@ -1,11 +1,11 @@
-package com.hamsterbusters.squeaker.comment;
+package com.hamsterbusters.squeaker.post.dto;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class NewCommentDto {
+public class NewPostDto {
 
     private String body;
     private String picture;

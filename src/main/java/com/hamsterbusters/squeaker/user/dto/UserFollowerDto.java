@@ -1,4 +1,4 @@
-package com.hamsterbusters.squeaker.user;
+package com.hamsterbusters.squeaker.user.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

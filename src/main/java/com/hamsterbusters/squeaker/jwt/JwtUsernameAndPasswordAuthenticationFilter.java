@@ -1,6 +1,7 @@
 package com.hamsterbusters.squeaker.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hamsterbusters.squeaker.exception.BadRequestException;
 import com.hamsterbusters.squeaker.user.User;
 import com.hamsterbusters.squeaker.user.UserService;
 import io.jsonwebtoken.Jwts;
@@ -16,9 +17,8 @@ import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.Date;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -48,7 +48,7 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
             return authenticate;
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new BadRequestException(e.getMessage(), e);
         }
 
     }
@@ -67,14 +67,14 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
                 .setSubject(String.valueOf(user.getUserId()))
                 .claim("name", nickname)
                 .setIssuedAt(new Date())
-                .setExpiration(java.sql.Date.valueOf(LocalDate.now().plusDays(jwtConfig.getTokenExpirationAfterDays())))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * jwtConfig.getTokenExpirationAfterMinutes()))
                 .signWith(secretKey)
                 .compact();
 
         response.addHeader(jwtConfig.getAuthorizationHeader(), jwtConfig.getTokenPrefix() + token);
 
-        Map<String, String> userData = new HashMap<>();
-        userData.put("userId", user.getUserId().toString());
+        Map<String, Object> userData = new LinkedHashMap<>();
+        userData.put("userId", user.getUserId());
         userData.put("nickname", user.getNickname());
         userData.put("avatar", null);
 
