@@ -26,7 +26,7 @@ public class PostMapper {
         postDto.setAvatar(user.getAvatar());
         boolean isLiked = isPostLikedByUser(post);
         postDto.setLiked(isLiked);
-        postDto.setCommentsCount(0);
+        postDto.setCommentsCount(post.getComments().size());
         postDto.setLikesCount(post.getPostReactions().size());
         return postDto;
     }

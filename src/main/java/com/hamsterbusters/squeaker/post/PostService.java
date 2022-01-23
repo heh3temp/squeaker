@@ -1,5 +1,6 @@
 package com.hamsterbusters.squeaker.post;
 
+import com.hamsterbusters.squeaker.comment.Comment;
 import com.hamsterbusters.squeaker.exception.BadRequestException;
 import com.hamsterbusters.squeaker.follower.Follower;
 import com.hamsterbusters.squeaker.jwt.JwtTokenVerifier;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
+import java.util.*;
+import java.util.Comparator;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -50,13 +53,15 @@ public class PostService {
             User followedUser = follower.getFollowed();
             followedPosts.addAll(
                     followedUser.getPosts().stream()
-                            .map(post -> postMapper.mapPostToDto(post, followedUser)).toList()
+                            .map(post -> postMapper.mapPostToDto(post, followedUser))
+                            .collect(Collectors.toList())
             );
         }
 
         followedPosts.addAll(
                 user.getPosts().stream()
-                        .map(post -> postMapper.mapPostToDto(post, user)).toList()
+                        .map(post -> postMapper.mapPostToDto(post, user))
+                        .collect(Collectors.toList())
         );
 
         return followedPosts.stream()
