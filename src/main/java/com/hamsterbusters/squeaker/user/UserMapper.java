@@ -25,6 +25,11 @@ public class UserMapper {
         return userDto;
     }
 
+    public User mapCreateUserDtoToUser(CreateUserDto createUserDto) {
+        User user = modelMapper.map(createUserDto, User.class);
+        return user;
+    }
+
     private boolean isFollowedByUser(User user) {
         FollowerCompositeKey followerCompositeKey = new FollowerCompositeKey(
                 user.getUserId(),
