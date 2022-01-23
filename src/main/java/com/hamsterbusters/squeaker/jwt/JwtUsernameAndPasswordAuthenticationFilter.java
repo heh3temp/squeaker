@@ -17,7 +17,6 @@ import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -68,7 +67,7 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
                 .setSubject(String.valueOf(user.getUserId()))
                 .claim("name", nickname)
                 .setIssuedAt(new Date())
-                .setExpiration(java.sql.Date.valueOf(LocalDate.now().plusDays(jwtConfig.getTokenExpirationAfterDays())))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * jwtConfig.getTokenExpirationAfterMinutes()))
                 .signWith(secretKey)
                 .compact();
 
