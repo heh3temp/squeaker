@@ -12,7 +12,7 @@ public class UserFollowerDto {
     private int userId;
     private String nickname;
     private String description;
-    private Object avatar;
+    private String avatar;
     private boolean followStatus;
 
 }

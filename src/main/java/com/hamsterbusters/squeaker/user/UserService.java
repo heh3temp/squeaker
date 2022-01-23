@@ -117,20 +117,37 @@ public class UserService implements UserDetailsService {
         User user = userOptional.orElseThrow(() -> new UsernameNotFoundException("User not found in the database"));
 
         String nickname = userDto.getNickname();
-        if (nickname != null)
+        if (nickname != null) {
+            if (!this.isValidNickname(nickname)) {
+                throw new InvalidValueException("Invalid nickname. Valid can include letters, digits, underscores and must be between 3 and 40 characters long");
+            }
             user.setNickname(nickname);
+        }
+            
 
         String description = userDto.getDescription();
         if (description != null)
             user.setDescription(description);
 
         String email = userDto.getEmail();
-        if (email != null)
+        if (email != null) {
+            if (!this.isValidEmail(email)) {
+                throw new InvalidValueException("Invalid email");
+            }
             user.setEmail(email);
+        }
 
         String password = userDto.getPassword();
-        if (password != null)
+        if (password != null) {
+            if (!this.isValidPassword(password)) {
+                throw new InvalidValueException("Invalid password. Must be between 8 and 100 characters and include small and large letters, digits and special characters.");
+            }
             user.setPassword(passwordEncoder.encode(password));
+        }
+
+        String avatar = userDto.getAvatar();
+        if (avatar != null)
+            user.setAvatar(avatar);
     }
 
     @Transactional
