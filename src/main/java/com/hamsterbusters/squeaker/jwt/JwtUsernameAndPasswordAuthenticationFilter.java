@@ -76,7 +76,7 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
         Map<String, Object> userData = new LinkedHashMap<>();
         userData.put("userId", user.getUserId());
         userData.put("nickname", user.getNickname());
-        userData.put("avatar", null);
+        userData.put("avatar", user.getAvatar());
 
         response.setContentType(APPLICATION_JSON_VALUE);
 
