@@ -18,9 +18,7 @@ public class PostController {
 
     @GetMapping("/popular_posts")
     public ResponseEntity<List<PostDto>> getPopularPosts(@RequestParam int hours) {
-
         List<PostDto> popularPosts = postService.getPopularPosts(hours);
-
         return ResponseEntity.ok()
                 .body(popularPosts);
     }
@@ -34,18 +32,22 @@ public class PostController {
 
     @GetMapping("/posts")
     public ResponseEntity<List<PostDto>> getFollowedPosts() {
-
         List<PostDto> followedPosts = postService.getFollowedPosts();
-
         return  ResponseEntity.ok()
                 .body(followedPosts);
     }
 
+    @GetMapping("/post/{postId}")
+    public ResponseEntity<PostDto> getPost(@PathVariable int postId) {
+        PostDto postDto = postService.getPost(postId);
+        return ResponseEntity.ok()
+                .body(postDto);
+    }
+
+
     @DeleteMapping("/post/{postId}")
     public ResponseEntity<Void> deletePost(@PathVariable int postId) {
-
         postService.deletePost(postId);
-
         return  ResponseEntity.ok()
                 .build();
     }

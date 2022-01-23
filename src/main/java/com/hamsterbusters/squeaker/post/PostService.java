@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -61,6 +62,12 @@ public class PostService {
         return followedPosts.stream()
                 .sorted(Comparator.comparing(PostDto::getCreationDate).reversed())
                 .collect(Collectors.toList());
+    }
+
+    public PostDto getPost(int postId) {
+        Optional<Post> postOptional = postRepository.findById(postId);
+        Post post = postOptional.orElseThrow(() -> new EntityNotFoundException("Post does not exist"));
+        return postMapper.mapPostToDto(post, post.getUser());
     }
 
     public void deletePost(int postId) {
