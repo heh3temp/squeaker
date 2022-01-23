@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
+
 @Getter
 @Setter
 @Entity
@@ -27,7 +28,7 @@ public class User {
     private LocalDateTime lastActivity;
     private boolean isActive;
     private String description;
-    private byte[] avatar;
+    private String avatar;
 
     @OneToMany(mappedBy = "user")
     private List<Post> posts;

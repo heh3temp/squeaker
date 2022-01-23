@@ -15,7 +15,7 @@ public class CommentDto {
 
     private int userId;
     private String nickname;
-    private Object avatar;
+    private String avatar;
     private String body;
     private int likesCount;
     private boolean liked;

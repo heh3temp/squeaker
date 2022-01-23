@@ -11,8 +11,8 @@ public class UserDto {
 
     private String nickname;
     private String description;
-    private Object background;
-    private Object avatar;
+    private String background;
+    private String avatar;
     private int followingCount;
     private int followersCount;
     private boolean followStatus;

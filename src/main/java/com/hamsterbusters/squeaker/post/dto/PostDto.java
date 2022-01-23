@@ -17,8 +17,8 @@ public class PostDto {
     private int userId;
     private String nickname;
     private String body;
-    private Object picture;
-    private Object avatar;
+    private String picture;
+    private String avatar;
     private int commentsCount;
     private int likesCount;
     private boolean liked;
