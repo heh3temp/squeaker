@@ -3,7 +3,7 @@ package com.hamsterbusters.squeaker.comment;
 import com.hamsterbusters.squeaker.comment.dto.CommentDto;
 import com.hamsterbusters.squeaker.comment.dto.NewCommentDto;
 import com.hamsterbusters.squeaker.jwt.JwtTokenVerifier;
-import com.hamsterbusters.squeaker.post.IllegalOperationException;
+import com.hamsterbusters.squeaker.post.exception.IllegalOperationException;
 import com.hamsterbusters.squeaker.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
