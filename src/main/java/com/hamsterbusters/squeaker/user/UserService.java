@@ -8,6 +8,7 @@ import com.hamsterbusters.squeaker.post.PostMapper;
 import com.hamsterbusters.squeaker.user.squeaker.SqueakerProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,9 +16,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.apache.commons.validator.routines.EmailValidator;
+
 
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -32,16 +37,35 @@ public class UserService implements UserDetailsService {
     private final FollowerService followerService;
     private final SqueakerProperties squeakerProperties;
 
-    public void register(User user) {
+    public void register(CreateUserDto createUserDto) {
 
-        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        if (!this.isValidEmail(createUserDto.getEmail())) {
+            throw new InvalidValueException("Invalid email");
+        }
+
+        if (!this.isValidPassword(createUserDto.getPassword())) {
+            throw new InvalidValueException("Invalid password. Must be between 8 and 100 characters and include small and large letters, digits and special characters.");
+        }
+
+        if (!this.isValidNickname(createUserDto.getNickname())) {
+            throw new InvalidValueException("Invalid nickname. Valid can include letters, digits, underscores and must be between 3 and 40 characters long");
+        }
+
+        String encodedPassword = passwordEncoder.encode(createUserDto.getPassword());
+
+        User user = userMapper.mapCreateUserDtoToUser(createUserDto);
 
         user.setPassword(encodedPassword);
         user.setJoinDate(LocalDateTime.now());
         user.setLastActivity(LocalDateTime.now());
         user.setActive(true);
 
-        userRepository.save(user);
+        try {
+            userRepository.save(user);
+        } catch (DataIntegrityViolationException e) {
+            throw new InvalidValueException("Nickname and email must be unique");
+        }
+
 
         User squeaker = getUserByNickname(squeakerProperties.getNickname());
         followerService.addSqueakerToFollowed(user.getUserId(), squeaker.getUserId());
@@ -116,5 +140,26 @@ public class UserService implements UserDetailsService {
         User user = userOptional.orElseThrow(() -> new UsernameNotFoundException("User not found in the database"));
         user.setActive(false);
         user.setEmail("****");
+    }
+
+    private boolean isValidPassword(String password) {
+        String validPasswordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,100}$";
+
+        Pattern pattern = Pattern.compile(validPasswordRegex);
+        Matcher matcher = pattern.matcher(password);
+        return matcher.matches();
+    }
+
+    private boolean isValidEmail(String email) {
+
+        return EmailValidator.getInstance().isValid(email);
+    }
+
+    private boolean isValidNickname(String nickname) {
+        String validNicknameRegex = "^[a-zA-Z0-9_]{3,30}$";
+
+        Pattern pattern = Pattern.compile(validNicknameRegex);
+        Matcher matcher = pattern.matcher(nickname);
+        return matcher.matches();
     }
 }
