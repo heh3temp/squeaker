@@ -2,6 +2,7 @@ package com.hamsterbusters.squeaker.post;
 
 import com.hamsterbusters.squeaker.post.dto.NewPostDto;
 import com.hamsterbusters.squeaker.post.dto.PostDto;
+import com.hamsterbusters.squeaker.post.dto.EditPostDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -48,6 +49,13 @@ public class PostController {
     @DeleteMapping("/post/{postId}")
     public ResponseEntity<Void> deletePost(@PathVariable int postId) {
         postService.deletePost(postId);
+        return  ResponseEntity.ok()
+                .build();
+    }
+
+    @PatchMapping("/post/{postId}")
+    public ResponseEntity<Void> editPost(@PathVariable int postId, @RequestBody EditPostDto editPostDto) {
+        postService.editPost(postId, editPostDto);
         return  ResponseEntity.ok()
                 .build();
     }
