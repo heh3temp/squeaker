@@ -1,23 +1,21 @@
 package com.hamsterbusters.squeaker.post;
 
-import com.hamsterbusters.squeaker.comment.Comment;
-import com.hamsterbusters.squeaker.exception.BadRequestException;
 import com.hamsterbusters.squeaker.follower.Follower;
 import com.hamsterbusters.squeaker.jwt.JwtTokenVerifier;
 import com.hamsterbusters.squeaker.post.dto.NewPostDto;
 import com.hamsterbusters.squeaker.post.dto.PostDto;
+import com.hamsterbusters.squeaker.post.dto.EditPostDto;
 import com.hamsterbusters.squeaker.post.exception.IllegalOperationException;
 import com.hamsterbusters.squeaker.user.User;
 import com.hamsterbusters.squeaker.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
-import java.util.*;
 import java.util.Comparator;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -87,5 +85,32 @@ public class PostService {
             throw new IllegalOperationException("Posts can only be deleted by the author");
         }
         postRepository.deleteById(postId);
+    }
+
+    @Transactional
+    public void editPost(int postId, EditPostDto editPostDto) {
+
+        int userId = JwtTokenVerifier.getPrincipalFromJwtToken();
+        Post post;
+        try {
+            post = postRepository.getById(postId);
+        } catch (EntityNotFoundException e) {
+            throw new EntityNotFoundException("Post does not exist");
+        }
+
+        if (userId != post.getUserId()) {
+            throw new IllegalOperationException("Posts can only be edited by the author");
+        }
+
+
+        String body = editPostDto.getBody();
+        if (body != null) {
+            post.setBody(body);
+        }
+
+        String picture = editPostDto.getPicture();
+        if (picture != null) {
+            post.setPicture(picture);
+        }
     }
 }

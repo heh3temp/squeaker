@@ -1,6 +1,7 @@
 package com.hamsterbusters.squeaker.comment;
 
 import com.hamsterbusters.squeaker.comment.dto.CommentDto;
+import com.hamsterbusters.squeaker.comment.dto.EditCommentDto;
 import com.hamsterbusters.squeaker.comment.dto.NewCommentDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,6 +35,13 @@ public class CommentController {
     public ResponseEntity<Void> deleteComment(@PathVariable int postId, @PathVariable int commentId) {
 
         commentService.deleteComment(commentId);
+        return ResponseEntity.ok().build();
+    }
+
+    @PatchMapping("/post/{postId}/comment/{commentId}")
+    public ResponseEntity<Void> deleteComment(@PathVariable int postId, @PathVariable int commentId, @RequestBody EditCommentDto editCommentDto) {
+
+        commentService.editComment(commentId, editCommentDto);
         return ResponseEntity.ok().build();
     }
 }

@@ -8,4 +8,5 @@ public interface CommentRepository extends CrudRepository<Comment, Integer> {
 
     List<Comment> findCommentsByPostId(Integer postId);
 
+    Comment getById(int commentId);
 }
