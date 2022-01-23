@@ -110,10 +110,6 @@ public class UserService implements UserDetailsService {
                 .collect(Collectors.toList());
     }
 
-    public static int generate(int min, int max) {
-        return min + (int) (Math.random() * ((max - min) + 1));
-    }
-
     @Transactional
     public void updateUser(UpdateUserDto userDto) {
         int userId = JwtTokenVerifier.getPrincipalFromJwtToken();
