@@ -1,5 +1,7 @@
 package com.hamsterbusters.squeaker.comment;
 
+import com.hamsterbusters.squeaker.comment.dto.CommentDto;
+import com.hamsterbusters.squeaker.comment.dto.NewCommentDto;
 import com.hamsterbusters.squeaker.user.User;
 import com.hamsterbusters.squeaker.user.UserService;
 import lombok.RequiredArgsConstructor;

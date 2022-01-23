@@ -1,5 +1,7 @@
 package com.hamsterbusters.squeaker.comment;
 
+import com.hamsterbusters.squeaker.comment.dto.CommentDto;
+import com.hamsterbusters.squeaker.comment.dto.NewCommentDto;
 import com.hamsterbusters.squeaker.jwt.JwtTokenVerifier;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,8 @@
 package com.hamsterbusters.squeaker.post;
 
 import com.hamsterbusters.squeaker.jwt.JwtTokenVerifier;
+import com.hamsterbusters.squeaker.post.dto.NewPostDto;
+import com.hamsterbusters.squeaker.post.dto.PostDto;
 import com.hamsterbusters.squeaker.post.reaction.PostReaction;
 import com.hamsterbusters.squeaker.post.reaction.PostReactionCompositeKey;
 import com.hamsterbusters.squeaker.user.User;

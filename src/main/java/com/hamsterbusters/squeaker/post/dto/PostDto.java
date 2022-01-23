@@ -1,4 +1,4 @@
-package com.hamsterbusters.squeaker.post;
+package com.hamsterbusters.squeaker.post.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

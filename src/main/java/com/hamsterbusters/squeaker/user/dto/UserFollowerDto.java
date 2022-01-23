@@ -1,4 +1,4 @@
-package com.hamsterbusters.squeaker.user;
+package com.hamsterbusters.squeaker.user.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,14 +7,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class UserDto {
+public class UserFollowerDto {
 
+    private int userId;
     private String nickname;
     private String description;
-    private Object background;
     private Object avatar;
-    private int followingCount;
-    private int followersCount;
     private boolean followStatus;
 
 }
