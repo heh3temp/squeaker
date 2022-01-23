@@ -152,6 +152,10 @@ public class UserService implements UserDetailsService {
         String avatar = userDto.getAvatar();
         if (avatar != null)
             user.setAvatar(avatar);
+
+        String bgImage = userDto.getBgImage();
+        if (bgImage != null)
+            user.setBgImage(bgImage);
     }
 
     @Transactional

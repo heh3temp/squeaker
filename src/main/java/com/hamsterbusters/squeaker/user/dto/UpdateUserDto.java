@@ -12,5 +12,5 @@ public class UpdateUserDto {
     private String email;
     private String password;
     private String avatar;
-
+    private String bgImage;
 }

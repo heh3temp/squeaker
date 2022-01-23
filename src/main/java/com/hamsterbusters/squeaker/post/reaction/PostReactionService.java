@@ -21,6 +21,7 @@ public class PostReactionService {
             removeReaction(userId, postId);
         }
     }
+
     private void addReaction(int userId, int postId) {
         PostReactionCompositeKey postReactionCompositeKey = new PostReactionCompositeKey(userId, postId);
         PostReaction postReaction = new PostReaction(postReactionCompositeKey);
