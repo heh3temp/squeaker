@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS posts (
     modification_date TIMESTAMP NOT NULL,
     picture VARCHAR(4000),
     
-    FOREIGN KEY (user_id) REFERENCES users(user_id)
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
 CREATE INDEX posts_user_id_IDX ON posts(user_id);
@@ -52,8 +52,8 @@ CREATE TABLE IF NOT EXISTS  comments (
     modification_date TIMESTAMP NOT NULL,
     picture VARCHAR(4000),
 
-    FOREIGN KEY (user_id) REFERENCES users(user_id),
-    FOREIGN KEY (post_id) REFERENCES posts(post_id)
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (post_id) REFERENCES posts(post_id) ON DELETE CASCADE
 
 );
 
@@ -67,8 +67,8 @@ CREATE TABLE IF NOT EXISTS followers (
     followed_id INT NOT NULL,
 
     PRIMARY KEY (follower_id, followed_id),
-    FOREIGN KEY (follower_id) REFERENCES users(user_id),
-    FOREIGN KEY (followed_id) REFERENCES users(user_id)
+    FOREIGN KEY (follower_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (followed_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
 CREATE INDEX followers_followed_id_IDX ON followers(followed_id);
@@ -80,8 +80,8 @@ CREATE TABLE IF NOT EXISTS post_mentions (
     post_id INT NOT NULL,
 
     PRIMARY KEY (user_id, post_id),
-    FOREIGN KEY (user_id) REFERENCES users(user_id),
-    FOREIGN KEY (post_id) REFERENCES posts(post_id)
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (post_id) REFERENCES posts(post_id) ON DELETE CASCADE
 );
 
 CREATE INDEX post_mentions_post_id_IDX ON post_mentions(post_id);
@@ -93,8 +93,8 @@ CREATE TABLE IF NOT EXISTS post_reactions (
     post_id INT NOT NULL,
 
     PRIMARY KEY (user_id, post_id),
-    FOREIGN KEY (user_id) REFERENCES users(user_id),
-    FOREIGN KEY (post_id) REFERENCES posts(post_id)
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (post_id) REFERENCES posts(post_id) ON DELETE CASCADE
 );
 
 CREATE INDEX post_reactions_post_id_IDX ON post_reactions(post_id);
@@ -106,8 +106,8 @@ CREATE TABLE IF NOT EXISTS comment_reactions (
     reaction_author_id INT NOT NULL,
 
     PRIMARY KEY (comment_id, reaction_author_id),
-    FOREIGN KEY (comment_id) REFERENCES comments(comment_id),
-    FOREIGN KEY (reaction_author_id) REFERENCES users(user_id)
+    FOREIGN KEY (comment_id) REFERENCES comments(comment_id) ON DELETE CASCADE,
+    FOREIGN KEY (reaction_author_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
 CREATE INDEX comment_reactions_reaction_author_id_IDX ON comment_reactions(reaction_author_id);
@@ -119,8 +119,8 @@ CREATE TABLE IF NOT EXISTS comment_mentions (
     mentioned_user_id INT NOT NULL,
 
     PRIMARY KEY (comment_id, mentioned_user_id),
-    FOREIGN KEY (comment_id) REFERENCES comments(comment_id),
-    FOREIGN KEY (mentioned_user_id) REFERENCES users(user_id)
+    FOREIGN KEY (comment_id) REFERENCES comments(comment_id) ON DELETE CASCADE,
+    FOREIGN KEY (mentioned_user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
 CREATE INDEX comment_reactions_mentioned_user_id_IDX ON comment_mentions(mentioned_user_id);
@@ -139,8 +139,8 @@ CREATE TABLE IF NOT EXISTS post_hashtags (
     post_id INT NOT NULL,
 
     PRIMARY KEY (name, post_id),
-    FOREIGN KEY (name) REFERENCES hashtags(name),
-    FOREIGN KEY (post_id) REFERENCES posts(post_id)
+    FOREIGN KEY (name) REFERENCES hashtags(name) ON DELETE CASCADE,
+    FOREIGN KEY (post_id) REFERENCES posts(post_id) ON DELETE CASCADE
 );
 
 CREATE INDEX post_hashtags_post_id_IDX ON post_hashtags(post_id);
