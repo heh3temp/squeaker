@@ -7,11 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -71,6 +73,80 @@ class UserIT {
         mockMvc.perform(get(String.format("/user/%d", userId)).header(HttpHeaders.AUTHORIZATION, token))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.message").value("User not found in the database"));
+    }
+
+    @Test
+    public void addUserInvalidPassword() throws Exception {
+
+        String userJSON = """
+                                {
+                                    "nickname": "test",
+                                    "email": "test@gmail.com",
+                                    "password": "AbaBmk1231"
+                                }
+                            """;
+
+        mockMvc.perform(post("/user")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(userJSON))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(jsonPath("$.message").value("Invalid password. Must be between 8 and 100 characters and include small and large letters, digits and special characters"));
+
+    }
+
+    @Test
+    public void addUserInvalidNickname() throws Exception {
+
+        String userJSON = """
+                                {
+                                    "nickname": "test  ",
+                                    "email": "test@gmail.com",
+                                    "password": "AbaBmk1231&&"
+                                }
+                            """;
+
+        mockMvc.perform(post("/user")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(userJSON))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(jsonPath("$.message").value("Invalid nickname. Valid can include letters, digits, underscores and must be between 3 and 40 characters long"));
+
+    }
+
+    @Test
+    public void addUserInvalidEmail() throws Exception {
+
+        String userJSON = """
+                                {
+                                    "nickname": "test",
+                                    "email": "..@..",
+                                    "password": "AbaBmk1231&&"
+                                }
+                            """;
+
+        mockMvc.perform(post("/user")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(userJSON))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(jsonPath("$.message").value("Invalid email"));
+
+    }
+
+    @Test
+    public void addUserCorrect() throws Exception {
+
+        String userJSON = """
+                                {
+                                    "nickname": "test",
+                                    "email": "test@gmail.com",
+                                    "password": "AbaBmk1231&&"
+                                }
+                            """;
+
+        mockMvc.perform(post("/user")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(userJSON))
+                .andExpect(status().isOk());
     }
 
 }

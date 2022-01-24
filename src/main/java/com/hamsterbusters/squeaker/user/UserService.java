@@ -48,7 +48,7 @@ public class UserService implements UserDetailsService {
         }
 
         if (!this.isValidPassword(createUserDto.getPassword())) {
-            throw new InvalidUserDataException("Invalid password. Must be between 8 and 100 characters and include small and large letters, digits and special characters.");
+            throw new InvalidUserDataException("Invalid password. Must be between 8 and 100 characters and include small and large letters, digits and special characters");
         }
 
         if (!this.isValidNickname(createUserDto.getNickname())) {
