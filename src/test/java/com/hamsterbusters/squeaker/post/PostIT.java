@@ -145,7 +145,7 @@ class PostIT {
                                     "body": "New Test Body"
                                 }"""))
                 .andExpect(status().isOk());
-        Post editedPost = postRepository.getById(postId);
+        Post editedPost = postRepository.findById(postId).get();
         assertThat(editedPost.getBody()).isEqualTo("New Test Body");
     }
 
