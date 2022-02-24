@@ -1,0 +1,13 @@
+.git
+.gitignore
+
+.idea
+
+.gradle
+gradlew.bat
+build
+
+docker
+# Dockerfile
+Jenkinsfile
+README.md
