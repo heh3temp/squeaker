@@ -1,9 +1,17 @@
-FROM gradle:7.3-jdk17
+# Build stage
+FROM gradle:7.3-jdk17 as build
 
-RUN mkdir -p /home/squeaker
+WORKDIR /home/squeaker
 
 COPY . /home/squeaker
 
-RUN gradle build -x test -p /home/squeaker/
+RUN gradle build -x test
 
-CMD java -jar /home/squeaker/build/libs/squeaker-0.0.1-SNAPSHOT.jar
+# Run stage
+FROM openjdk:17-alpine
+
+WORKDIR /home/squeaker
+
+COPY --from=build /home/squeaker/build/libs/squeaker-0.0.1-SNAPSHOT.jar squeaker.jar
+
+CMD java -jar squeaker.jar
