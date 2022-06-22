@@ -16,42 +16,20 @@
 
 
 ## General Information
+- This repo contains backend for squeaker. Frontend is in a separate repository
 - This project is made for educational purposes.
 - Its goal is to made bigger system for "Design and integration of systems".
-- We are working on it to get familiar with things like Jenkins or Nexus.
+- We striving to get familiar with spring boot and backend development in java
 
 
 ## Technologies Used
 
 
 ## Features
-
-
-## Screenshots
-
-
-## Setup
-
-
-## Usage
-
-
-## Project Status
-Project is: _in progress_ 
-
-
-## Room for Improvement
-
-Room for improvement:
-
-
-To do:
-
-
-## Acknowledgements
-Many thanks to Anna Czajka from Touk who inspired us and mentored during the whole process of development
-
-
-## Contact
-
+- adding/removing/editing posts
+- adding/removing/editing comments
+- following/unfollowing users
+- adding/removing reactions to posts and comments
+- works with pictures and gifs
+- editable user profiles
 
